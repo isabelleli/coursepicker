@@ -36,10 +36,10 @@ public class Course{
   }
   
   public String[] getDate(){
-    boolean thursday = false;
+    boolean thursday = false; //a way to determine whether "TH" needs to be added to the array at the end
     if (date.contains("TH")) {
-      date = date.replace("TH", "");
-      thursday = true;
+      date = date.replace("TH", ""); //takes out TH from date
+      thursday = true; 
     }
     String[] days = date.split("(?!^)"); //method of splitting by character taken from stackoverflow 
     //(http://stackoverflow.com/questions/5235401/split-string-into-array-of-character-strings)
@@ -47,12 +47,13 @@ public class Course{
     String[] dates = new String[5];
     
     for (int i = 0; i < days.length; i++) {
-      dates[i] = days[i];
+      dates[i] = days[i]; //copies all of the characters split from date and transfers it to dates
     }
     
     if (thursday) {
-      dates[days.length] = "TH";
+      dates[days.length] = "TH"; //adds TH at the end of the array
     }
+    
     return dates;
   }
   
