@@ -19,7 +19,7 @@ public class CourseInformationTest{
     courseCRN.put("CS 111", new LinkedList<String>(Arrays.asList("10006", "10042", "12822")));
     courseDetails.put("10006", new String[] {"TF", "11:00AM", "ENI", "01", "09:50AM", "CS", "CS 111"});
     courseDetails.put("10042", new String[] {"MTHF", "12:20AM", "LYN", "02", "11:00AM", "CS", "CS 111"});
-     
+    courseDetails.put("12822", new String[] {"MWTH", "01:30PM", "SOHIE", "03", "02:40PM", "CS", "CS 111"});
     }
   
   public String[] searchDetails(String crn) { 
