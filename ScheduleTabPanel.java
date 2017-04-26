@@ -24,9 +24,9 @@ public class ScheduleTabPanel extends JPanel {
     buttons = new JButton[5][5];
     timeLabel = new JLabel[16];
     weekdays = new JLabel[5];
-    String[] times = {"08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "01:00", "01:30",
-      "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00",
-      "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30"}; //all of the times for the calendar
+    String[] times = {"08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
+      "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00",
+      "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"}; //all of the times for the calendar
     
     String[] days = {"M", "T", "W", "TH", "F"};
     
@@ -75,24 +75,42 @@ public class ScheduleTabPanel extends JPanel {
         //buttons[i][j].addActionListener(new ButtonListener());
       }
     }
+
+    String[] arr = tester.getClass(0);
+    Time start = new Time(arr[1]); 
+    Time end = new Time(arr[2]);
     
+    //rounds both start and end time to nearest half hour
+    start.roundToNearestHalfHour(); 
+    end.roundToNearestHalfHour();
+    
+    //gets corresponding index position for the buttons
+    int indexStart = Arrays.asList(times).indexOf(start.toString());
+    int indexEnd = Arrays.asList(times).indexOf(end.toString());
+    
+    for (int i = indexStart; i <= indexEnd; i++) {
+      buttons[i][0].setText("hi");
+      System.out.println("hi");
+    }
 
     
-    int size = tester.getSize();
-    for (int i = 0; i < size; i++) {
-      String[] arr = tester.getClass(i);
-      Time start = new Time(arr[1]); 
-      Time end = new Time(arr[2]);
-      
-      //rounds both start and end time to nearest half hour
-      start.roundToNearestHalfHour(); 
-      end.roundToNearestHalfHour();
-      
-      //gets corresponding index position for the buttons
-      int indexStart = Arrays.asList(times).indexOf(start.toString());
-      int indexEnd = Arrays.asList(times).indexOf(end.toString());
-      
-    }
+//    int size = tester.getSize();
+//    for (int i = 0; i < size; i++) {
+//      String[] arr = tester.getClass(i);
+//      Time start = new Time(arr[1]); 
+//      Time end = new Time(arr[2]);
+//      
+//      //rounds both start and end time to nearest half hour
+//      start.roundToNearestHalfHour(); 
+//      end.roundToNearestHalfHour();
+//      
+//      //gets corresponding index position for the buttons
+//      int indexStart = Arrays.asList(times).indexOf(start.toString());
+//      int indexEnd = Arrays.asList(times).indexOf(end.toString());
+//      
+//      
+//      
+//    }
    
     
     add(middle);
