@@ -28,7 +28,7 @@ public class ScheduleTabPanel extends JPanel {
       "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00",
       "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30"}; //all of the times for the calendar
     
-    String[] days = {"Mon", "Tues", "Wed", "Thur", "Fri"};
+    String[] days = {"M", "T", "W", "TH", "F"};
     
     for (int i = 0; i < 6; i++) {
       JLabel hourLabel = new JLabel(times[i]); //initializes a time label
@@ -81,10 +81,14 @@ public class ScheduleTabPanel extends JPanel {
     int size = tester.getSize();
     for (int i = 0; i < size; i++) {
       String[] arr = tester.getClass(i);
-      Time start = new Time(arr[1]);
+      Time start = new Time(arr[1]); 
       Time end = new Time(arr[2]);
-      start.roundToNearestHalfHour();
+      
+      //rounds both start and end time to nearest half hour
+      start.roundToNearestHalfHour(); 
       end.roundToNearestHalfHour();
+      
+      //gets corresponding index position for the buttons
       int indexStart = Arrays.asList(times).indexOf(start.toString());
       int indexEnd = Arrays.asList(times).indexOf(end.toString());
       

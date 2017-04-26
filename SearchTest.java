@@ -9,7 +9,7 @@ import java.util.*;
 public class SearchTest {
   private String[][] searchResults;
   public SearchTest() {
-    String[] cs1 = {"CS 111 01", "09:50", "11:00", "MTh", "Eni"};
+    String[] cs1 = {"CS 111 01", "09:50", "11:00", "MTH", "Eni"};
     String[] cs2 = {"CS 115 02", "08:30", "09:40", "TF", "Stella"};
     searchResults = new String[][]{cs1, cs2};
   }
