@@ -87,7 +87,6 @@ public class ScheduleTabPanel extends JPanel {
       end.roundToNearestHalfHour();
       int indexStart = Arrays.asList(times).indexOf(start.toString());
       int indexEnd = Arrays.asList(times).indexOf(end.toString());
-      
     }
    
     
