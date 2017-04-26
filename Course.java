@@ -1,5 +1,4 @@
 /* Course.java
-<<<<<<< HEAD
  * Jennifer Wang, Isabelle Li, Shan Lu
  * CS 230 Final Project
  * Object to store information about an individual course
@@ -13,7 +12,6 @@ public class Course{
   private String startTime;
   private String endTime;
   private String professor;
-  private String subject;
   private String session;
   private String title;
     
@@ -26,8 +24,7 @@ public class Course{
     professor = infoArray[2];
     session = infoArray[3];
     startTime = infoArray[4];
-    subject = infoArray[5];
-    title = infoArray[6];
+    title = infoArray[5];
 
   }
   
@@ -77,11 +74,14 @@ public class Course{
     return title;
   }
   
-  public String getSubject(){
-    return subject;
-  }
-  
   public String toString() {
+    String r = "";
+    r += "Title: " + title + "\nSession: " + session + "\nCRN: " + crn + "\nProfessor: " + professor + "\nTime: "
+      + startTime + "-" + endTime + "\nDate: " + date;
+    
+    return r;
+    
+    
   }
   
   public static void main(String[] args) {
@@ -91,6 +91,8 @@ public class Course{
     System.out.println(Arrays.toString(c.getDate()));
     Course f = new Course("56789", b);
     System.out.println(Arrays.toString(f.getDate()));
+    System.out.println(c);
+    System.out.println(f);
 
   }
 }

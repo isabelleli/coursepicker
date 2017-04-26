@@ -27,7 +27,11 @@ public class SearchTest {
   }
   
   public String toString() {
-    return searchResults;
+    String r = "";
+    for (int i = 0; i < getSize(); i++) {
+      r += searchResults.get(i);
+    }
+    return r;
   }
   
   public static void main(String[] args) {
