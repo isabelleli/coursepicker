@@ -5,10 +5,11 @@
  * Object to store information about an individual course
  */
 
+import java.util.*;
 public class Course{
   //instance variables
   private String crn;
-  private String day;
+  private String date;
   private String startTime;
   private String endTime;
   private String professor;
@@ -16,60 +17,77 @@ public class Course{
   private String session;
   private String title;
     
-  public Course(String c, CourseInformation info) {
+  public Course(String c, String[] info) { //second parameter is CourseInformation info;
     crn = c;
-    String[] infoArray = info.searchDetails(c); //questionable? may need to copy entire array instead of just reading off
-    day = infoArray[0];
+    String[] infoArray = info;
+    //String[] infoArray = info.searchDetails(c); //questionable? may need to copy entire array instead of just reading off
+    date = infoArray[0];
     endTime = infoArray[1]; 
     professor = infoArray[2];
     session = infoArray[3];
     startTime = infoArray[4];
     subject = infoArray[5];
-    title = inforArray[6];
+    title = infoArray[6];
 
   }
   
-  public String getCRN{
+  public String getCRN(){
     return crn;
   }
   
-  pubic String getDay{
-    return day;
+  public String[] getDate(){
+    boolean thursday = false;
+    if (date.contains("TH")) {
+      date = date.replace("TH", "");
+      thursday = true;
+    }
+    String[] days = date.split("(?!^)"); //method of splitting by character taken from stackoverflow 
+    //(http://stackoverflow.com/questions/5235401/split-string-into-array-of-character-strings)
+    
+    String[] dates = new String[5];
+    
+    for (int i = 0; i < days.length; i++) {
+      dates[i] = days[i];
+    }
+    
+    if (thursday) {
+      dates[days.length] = "TH";
+    }
+    return dates;
   }
   
-  pubic String getStartTime{
+  public String getStartTime(){
     return startTime;
   }
   
-  pubic String getEndTime{
+  public String getEndTime(){
     return endTime;
   }
   
-  pubic String getProf{
+  public String getProf(){
     return professor;
   }
   
-  pubic String getSession{
+  public String getSession(){
     return session;
   }
   
-  pubic String getTitle{
+  public String getTitle(){
     return title;
   }
   
-  pubic String getSubject{
+  public String getSubject(){
     return subject;
   }
-
-
-=======
- * CS 230 final project
- * Modified by: ili
- * Modified date: 04/26/17
- */
-
-public class Course {
   
-  public Course(int CRN)
->>>>>>> origin/master
+  public static void main(String[] args) {
+    String[] d = {"MTH", "09:50AM", "Eni", "01", "08:30AM","CS", "111"};
+    String[] b = {"MTTHF", "10:50AM", "Eni", "01", "09:40AM","CS", "240"};
+    Course c = new Course("56789", d);
+    System.out.println(Arrays.toString(c.getDate()));
+    Course f = new Course("56789", b);
+    System.out.println(Arrays.toString(f.getDate()));
+
+  }
 }
+
