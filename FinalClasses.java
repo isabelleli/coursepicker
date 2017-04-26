@@ -19,7 +19,7 @@ public class FinalClasses {
   }
   
   public void removeClass(Course c) {
-    for (int i = 0; i < finalResult.size(), i ++){
+    for (int i = 0; i < finalResult.size(); i ++){
       if (finalResult.get(i).equals(c)) {
         finalResult.remove(i);
       }
@@ -27,7 +27,7 @@ public class FinalClasses {
   
   }
   
-  public LinkedList<String[]> getFinalClasses(){
+  public LinkedList<Course> getFinalClasses(){
     return finalResult;
   }
 

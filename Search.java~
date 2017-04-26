@@ -10,7 +10,7 @@ import java.util.*;
 public class Search{
   //instance variables
   private LinkedList<Course> searchResults;
-  private CourseInformationTest courseInfo;
+  CourseInformationTest courseInfo;
   private LinkedList<String> crns;
   
   public Search(CourseInformationTest test){
@@ -40,4 +40,5 @@ public class Search{
     bob.searchCourse("CS 111");
     System.out.println(bob.getSearchResults());
   }
+
 }

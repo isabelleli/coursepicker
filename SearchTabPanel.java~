@@ -48,7 +48,7 @@ public class SearchTabPanel {
       //creates new search whenever search button is pressed, adds new info to searchResults
       if (event.getSource() == searchButton) {
         String name = courseName.getText();
-        Search s = new Search(CourseInformationTest, name);
+        Search s = new Search(CourseInformationInfo, name);
         //update searchResults somehow
         results.setText(s.toString());     
       }

@@ -4,23 +4,23 @@
  * This is the object that we will use to store the linked list of final course selections the user has made.
  */
 
-//note: make each class an object? or else how to add?
+import java.util.*;
 
 public class FinalClasses {
   //instance variable
-  private LinkedList<String[]> finalResult;
+  private LinkedList<Course> finalResult;
   
   public FinalClasses(){
-    finalResult = LinkedList<String[5]>;
+    finalResult = new LinkedList<Course>();
   }
   
-  public void addClass(String crn) {
-    finalResult.add(??)
+  public void addClass(Course c) {
+    finalResult.add(c);
   }
   
-  public void removeClass(String crn) {
+  public void removeClass(Course c) {
     for (int i = 0; i < finalResult.size(), i ++){
-      if (finalResult.get(i)[0].equals(crn)) {
+      if (finalResult.get(i).equals(c)) {
         finalResult.remove(i);
       }
     }
