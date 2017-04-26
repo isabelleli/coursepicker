@@ -1,61 +1,95 @@
+/*
+ CourseInformation.java
+ 2 Hash Tables storing all course information
+ Written by: Shan Lu
+ Apr. 26, 2017
+*/
 
-
-//658(750-92)
-//750
 
 import java.util.*;
-import org.json.*;
-  
+import java.net.*;
+import java.io.*;
+
 public class CourseInformation {
   
-  //javac -cp /Users/Regina/Desktop/scraping/json-20160212.jar;
+  String[] crn = new String[750]; // an array of CRNs
+  String[] search = new String[750]; // an array of "subject + number" eg. "CS 111"
+  String number;
+  String[] line;
+  Hashtable<String, LinkedList<String>> courseCRN; 
+       // the first hashtable: search = a linkedlist of CRNs
+       // eg. "PHYS 106=[11251, 11252, 11323, 11331]"
   
-  public static void main (String[] args) {
+  /*
+   Constructor
+   reads courses info from imput file and puts them into hashtable courseCRN
+  */
+  public CourseInformation(String fileName) {
     
-    Hashtable<String, String> courseCRN = new Hashtable<String, String>(1000);// 1000 initial spots 
+    courseCRN = new Hashtable<String, LinkedList<String>>(1000);
+    int count = 0;
+    
+    try {
       
-    String jsonFilePath = "/Users/Regina/Desktop/scraping/test.json";
-//    Reader in = new InputStreamReader(new FileInputStream(jsonFilePath), StandardCharsets.UTF_8);
-//    JSONArray json = new JSONArray(new JSONTokener(in));
-//    in.close();
-            
-    JSONArray json = new JSONArray(jsonFilePath);
-//    JSONParser parser = new JSONParser();
-//    JSONObject json = new parser.parse(new FileReader("CourseInfo.json"));
-    
-//    Iterator<String> iterator = json.iterator();
-//    while (iterator.hasNext()) {
-//      JSONObject course = json.get(i);
-//      String subjectNumber = course.getString("Subject") + " " + course.getString("Number");
-//      String crn = course.getString("CRN");
-//      courseCRN.put(subjectNumber, crn);
-//    }
-    
-    for (int i=0;i<json.length();i++) {
-      JSONObject course = json.getJSONObject(i);
-      String subjectNumber = course.getString("Subject") + " " + course.getString("Number");
-      String crn = course.getString("CRN");
-      courseCRN.put(subjectNumber, crn);
-    }
-    
-//    courseCRN.put("AFR 105","13587");
-//    courseCRN.put("AFR 217","13813");
-//    courseCRN.put("AFR 225","13812");
-    System.out.println(courseCRN);
-//    String str = courseCRN.get("AFR 105");
-//    System.out.println(str);
-  }
-}
+      FileReader fileReader = new FileReader(fileName);
+      
+      BufferedReader bufferedReader = new BufferedReader(fileReader);
+ 
+      while (bufferedReader.ready()) { // while has more to read
+        
+        String[] line = bufferedReader.readLine().trim().split(":");
+        if (line[0].equals("\"CRN\"")) {
+          crn[count] = line[1].trim().substring(1,line[1].length()-3);
+            // gets rid of spaces and "", puts into the array for CRNs
+        }
+        
+        else if (line[0].equals("\"Number\"")) {
+          number = line[1].trim().substring(1,line[1].length()-3);
+             // gets rid of spaces and "", stores into a string
+        }
+        
+        else if (line[0].equals("\"Subject\"")) {
+          search[count] = line[1].trim().substring(1,line[1].length()-2) + " " + number;
+          count++; // increments count after every course
+        }  
 
-//import org.json.*;
-//
-//
-//JSONObject obj = new JSONObject(" .... ");
-//String pageName = obj.getJSONObject("pageInfo").getString("pageName");
-//
-//JSONArray arr = obj.getJSONArray("posts");
-//for (int i = 0; i < arr.length(); i++)
-//{
-//    String post_id = arr.getJSONObject(i).getString("post_id");
-//    ......
-//}
+      }
+      
+      // gets info from two arrays and puts in to hashtable courseCRN
+      for (int i=0;i<count;i++) {
+        if (!courseCRN.containsKey(search[i])) {
+          LinkedList<String> value = new LinkedList<String>(); // new linkedlist
+          value.add(crn[i]); // adds current CRN
+          courseCRN.put(search[i],value);
+        }
+        else {
+          LinkedList<String> list = courseCRN.get(search[i]); // current linkedlist
+          list.add(crn[i]);
+          courseCRN.put(search[i],list);
+        }
+      }
+    }
+    catch (IOException ex) { // when file not existed
+      System.out.println(ex);
+    }
+  }
+    
+  
+  /*
+   getter method
+   @return first hashtable courseCRN
+  */
+  public Hashtable<String, LinkedList<String>> getFirstTable() {
+    return courseCRN;
+  }
+  
+  /*
+   main method
+   testing
+  */
+  public static void main (String[] args) {
+    CourseInformation a = new CourseInformation("CourseInfo.txt");
+    System.out.println(a.getFirstTable());
+    System.out.println(a.getFirstTable().get("CS 111"));
+  } 
+}
