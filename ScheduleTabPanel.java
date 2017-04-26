@@ -15,7 +15,7 @@ public class ScheduleTabPanel extends JPanel {
   private JLabel[] timeLabel;
   private JLabel[] weekdays;
   private SearchTest tester;
-   
+  
   public ScheduleTabPanel(SearchTest s) { //will take objects later
     
     //initializing everything
@@ -47,14 +47,14 @@ public class ScheduleTabPanel extends JPanel {
     JPanel top = new JPanel(); //put what course you're searching for here
     
     searchResults = new JLabel("Search results will appear here.",
-                      SwingConstants.CENTER);
+                               SwingConstants.CENTER);
     //NEED TO ADD SOME EVENT LISTENER TO THIS 
     top.add(searchResults); //adds the label to the top panel
     add(top); //adds top panel to overall ScheduleTabPanel
-
+    
     JPanel middle = new JPanel(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
-
+    
     for (int j = 0; j < buttons.length; j++) {
       c.gridy = j + 1; //sets the row position of the time label
       c.gridx = 0; //gridx set to 0 so that all the time labels are in the first column
@@ -72,10 +72,10 @@ public class ScheduleTabPanel extends JPanel {
         buttons[j][k].setPreferredSize(new Dimension(50, 40)); //sets the size of the buttons
         c.insets = new Insets(-3, -3, -3, -3); //insets with negative values removes spaces in between the buttons
         middle.add(buttons[j][k], c);
-        //buttons[i][j].addActionListener(new ButtonListener());
+        buttons[j][k].addActionListener(new ButtonListener());
       }
     }
-
+    
     String[] arr = tester.getClass(0);
     Time start = new Time(arr[1]); 
     Time end = new Time(arr[2]);
@@ -92,7 +92,7 @@ public class ScheduleTabPanel extends JPanel {
       buttons[i][0].setText("hi");
       System.out.println("hi");
     }
-
+    
     
 //    int size = tester.getSize();
 //    for (int i = 0; i < size; i++) {
@@ -111,7 +111,7 @@ public class ScheduleTabPanel extends JPanel {
 //      
 //      
 //    }
-   
+    
     
     add(middle);
     
@@ -119,7 +119,14 @@ public class ScheduleTabPanel extends JPanel {
   private class ButtonListener implements ActionListener {
     
     public void actionPerformed(ActionEvent event) {
-      
+      for (int a = 0; a < buttons.length; a++) {
+        for (int b = 0; b < buttons[a].length; b++) {
+          if (buttons[a][b] == event.getSource()) {
+            //something
+          }
+          
+        }
+      }
     }
   }
 }

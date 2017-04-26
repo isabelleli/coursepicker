@@ -7,26 +7,27 @@
 import java.util.*;
 
 public class SearchTest {
-  private String[][] searchResults;
+  private LinkedList<Course> searchResults;
   public SearchTest() {
-    String[] cs1 = {"CS 111 01", "08:30AM", "09:40AM", "MTH", "Eni"};
-    String[] cs2 = {"CS 115 02", "08:30AM", "09:40AM", "TF", "Stella"};
-    searchResults = new String[][]{cs1, cs2};
+    String[] c = {"MTH", "09:40AM", "Eni", "01", "08:30AM","CS", "111"};
+    String[] d = {"MWTHF", "11:00AM", "Susan", "01", "09:50AM","CHIN", "101"};
+    Course a = new Course("56789", c);
+    Course b = new Course("12345", d);
+    searchResults = new LinkedList<Course>();
+    searchResults.add(a);
+    searchResults.add(b);
   }
   
-  public String[] getClass(int index) {
-    return searchResults[index];
+  public Course getClass(int index) {
+    return searchResults.get(index);
   }
   
   public int getSize() {
-    return searchResults.length;
+    return searchResults.size();
   }
+  
   public String toString() {
-    String r = "";
-    for (int i = 0; i < searchResults.length; i++) {
-      r += Arrays.toString(searchResults[i]);
-    }
-    return r;
+    return searchResults;
   }
   
   public static void main(String[] args) {

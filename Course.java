@@ -81,6 +81,9 @@ public class Course{
     return subject;
   }
   
+  public String toString() {
+  }
+  
   public static void main(String[] args) {
     String[] d = {"MTH", "09:50AM", "Eni", "01", "08:30AM","CS", "111"};
     String[] b = {"MTTHF", "10:50AM", "Eni", "01", "09:40AM","CS", "240"};
