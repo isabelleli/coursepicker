@@ -1,0 +1,19 @@
+
+import java.util.*;
+
+//658(750-92)
+//750
+  
+public class CourseInformation {
+  
+  public static void main (String[] args) {
+    
+    Hashtable<String, String> courseCRN = new Hashtable<String, String>(10); // 1000 initial spots 
+    courseCRN.put("AFR 105","13587");
+    courseCRN.put("AFR 217","13813");
+    courseCRN.put("AFR 225","13812");
+    System.out.println(courseCRN);
+    String str = courseCRN.get("AFR 105");
+    System.out.println(str);
+  }
+}
