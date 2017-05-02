@@ -149,11 +149,15 @@ public class CourseInformation {
   */
   public static void main (String[] args) {
     CourseInformation a = new CourseInformation("CourseInfo.txt");
+    System.out.println("Searching in the first hash table course - CRNs");
+    System.out.println("All CRNs for \"PHYS 106\": ");
     System.out.println(a.getFirstTable().get("PHYS 106"));
     System.out.println();
+    System.out.println("Searching in the second hash table CRN - details");
+    System.out.println("Course information for \"14191\": ");
     System.out.println(Arrays.toString(a.getSecondTable().get("14191")));
         // print the array value as a string
-    System.out.println(a.getSecondTable().get("14191")[1]);
+    //System.out.println(a.getSecondTable().get("14191")[1]);
         // get the course name
   } 
 }

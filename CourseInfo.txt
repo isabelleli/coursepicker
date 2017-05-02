@@ -1540,9 +1540,9 @@
   }, 
   {
     "CRN": "14511", 
-    "Name": "Gendering the Bronze Screen: Representations of Chicanas/Latinas in FilmI", 
+    "Name": "Gendering the Bronze Screen: Representations of Chicanas/Latinas in Film", 
     "Number": "240", 
-    "Professor": "RENE MATA", 
+    "Professor": "IRENE MATA", 
     "Session": "01", 
     "Subject": "CAMS", 
     "Time": "W - 02:15 PM - 04:45 PM"
@@ -4276,18 +4276,18 @@
   }, 
   {
     "CRN": "10167", 
-    "Name": "Multivariable CalculusI", 
+    "Name": "Multivariable Calculus", 
     "Number": "205", 
-    "Professor": "SMAR VOLIC", 
+    "Professor": "ISMAR VOLIC", 
     "Session": "03", 
     "Subject": "MATH", 
     "Time": "TWF - 09:50 AM - 11:00 AM"
   }, 
   {
     "CRN": "11350", 
-    "Name": "Multivariable CalculusI", 
+    "Name": "Multivariable Calculus", 
     "Number": "205", 
-    "Professor": "SMAR VOLIC", 
+    "Professor": "ISMAR VOLIC", 
     "Session": "04", 
     "Subject": "MATH", 
     "Time": "TF - 01:30 PM - 02:40 PM; W - 02:15 PM - 03:25 PM"
@@ -6130,18 +6130,18 @@
   }, 
   {
     "CRN": "10100", 
-    "Name": "Intermediate SpanishI", 
+    "Name": "Intermediate Spanish", 
     "Number": "201", 
-    "Professor": "NELA SELIMOVIC", 
+    "Professor": "INELA SELIMOVIC", 
     "Session": "03", 
     "Subject": "SPAN", 
     "Time": "MWTH - 11:10 AM - 12:20 PM"
   }, 
   {
     "CRN": "14677", 
-    "Name": "Intermediate SpanishI", 
+    "Name": "Intermediate Spanish", 
     "Number": "201", 
-    "Professor": "NELA SELIMOVIC", 
+    "Professor": "INELA SELIMOVIC", 
     "Session": "04", 
     "Subject": "SPAN", 
     "Time": "MTH - 01:30 PM - 02:40 PM; W - 02:15 PM - 03:25 PM"
@@ -6436,9 +6436,9 @@
   }, 
   {
     "CRN": "14722", 
-    "Name": "First Year Seminar:First-Year Seminar: Lessons of Childhood: Representations of Difference in Children's MediaI", 
+    "Name": "First Year Seminar:First-Year Seminar: Lessons of Childhood: Representations of Difference in Children's Media", 
     "Number": "102Y", 
-    "Professor": "RENE MATA", 
+    "Professor": "IRENE MATA", 
     "Session": "01", 
     "Subject": "WGST", 
     "Time": "TF - 01:30 PM - 02:40 PM"
@@ -6490,9 +6490,9 @@
   }, 
   {
     "CRN": "14048", 
-    "Name": "Gendering the Bronze Screen: Representations of Chicanas/Latinas in FilmI", 
+    "Name": "Gendering the Bronze Screen: Representations of Chicanas/Latinas in Film", 
     "Number": "223", 
-    "Professor": "RENE MATA", 
+    "Professor": "IRENE MATA", 
     "Session": "01", 
     "Subject": "WGST", 
     "Time": "W - 02:15 PM - 04:45 PM"
