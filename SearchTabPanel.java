@@ -24,7 +24,11 @@ public class SearchTabPanel extends JPanel{
     setBackground(Color.pink);
     add(new JLabel("Please enter the title of the course you wish to take and click search. Example: CS 111"), BorderLayout.NORTH);
     add(new JLabel("Course Title: "), BorderLayout.WEST);  
+    
     results = new JLabel ("Information about the course you have searched for will appear here.");
+    results.setMinimumSize(new Dimension(700, 300));
+    results.setPreferredSize(new Dimension(700, 300));
+    results.setMaximumSize(new Dimension(700, 300));
     add(results, BorderLayout.SOUTH);
     
     searchButton = new JButton("Search");
@@ -49,9 +53,13 @@ public class SearchTabPanel extends JPanel{
     public void actionPerformed(ActionEvent event) {
       //creates new search whenever search button is pressed, adds new info to searchResults
       if (event.getSource() == searchButton) {
-        String name = courseName.getText();
-        userSearch.searchCourse(name);
-        results.setText(userSearch.getSearchResults().toString());     
+        try {
+          String name = courseName.getText().toUpperCase();
+          userSearch.searchCourse(name);
+          results.setText(userSearch.getSearchResults().toString());     
+        } catch (IllegalArgumentException e){
+          results.setText("Invalid course name. Please search again.");
+        }
       }
     }
   }

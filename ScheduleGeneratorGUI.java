@@ -15,7 +15,7 @@ public class ScheduleGeneratorGUI {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
     // creates the objects we need to use
-    CourseInformationTest info = new CourseInformationTest();
+    CourseInformation info = new CourseInformation("CourseInfo.txt");
     Search userSearch = new Search(info);
     FinalClasses classList = new FinalClasses();
 

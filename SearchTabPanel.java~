@@ -8,7 +8,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class SearchTabPanel {
+public class SearchTabPanel extends JPanel{
    //instance variables
   private JButton searchButton;
   private JTextField courseName;
@@ -27,7 +27,9 @@ public class SearchTabPanel {
     results = new JLabel ("Information about the course you have searched for will appear here.");
     add(results, BorderLayout.SOUTH);
     
-    searchButton = new JButton();
+    searchButton = new JButton("Search");
+    ButtonListener b = new ButtonListener(userSearch);
+    searchButton.addActionListener(b);
     add(searchButton, BorderLayout.EAST);
     
     courseName = new JTextField();
@@ -35,22 +37,21 @@ public class SearchTabPanel {
   }
   
   private class ButtonListener implements ActionListener{
-    //Search object is an input
+    //CourseInformationTest object, containing hash tables, is an input
     private Search userSearch;
     
-    public ButtonListener(Search u){
+    public ButtonListener(Search s){
       //passes Search object into ButtonListener and calls the super() constructor
       super();
-      userSearch = u;
+      userSearch = s;
     }
     
     public void actionPerformed(ActionEvent event) {
       //creates new search whenever search button is pressed, adds new info to searchResults
       if (event.getSource() == searchButton) {
         String name = courseName.getText();
-        Search s = new Search(CourseInformationInfo, name);
-        //update searchResults somehow
-        results.setText(s.toString());     
+        userSearch.searchCourse(name);
+        results.setText(userSearch.getSearchResults().toString());     
       }
     }
   }

@@ -90,8 +90,8 @@ public class ScheduleTabPanel extends JPanel {
       int indexEnd = Arrays.asList(times).indexOf(end.toString());
       
       for (int b = indexStart; b <= indexEnd; b++) {
-        buttons[b][0].setBackground(Color.RED);
         buttons[b][0].setOpaque(true);
+        buttons[b][0].setBackground(Color.RED);
       }
       
     }
