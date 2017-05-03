@@ -29,9 +29,14 @@ public class Search{
     }
   }
 
-  public LinkedList<Course> getSearchResults(){
-    return searchResults;
+  public String getSearchResults(){
+    String s = "<html><body>";
+    for (int i = 0; i < searchResults.size(); i++) {
+      s += searchResults.get(i).toString() + "<br>";
+    }
+    return s + "</body></html>"; 
   }
+  
   
   public static void main(String[] args) {
     CourseInformationTest test = new CourseInformationTest();
