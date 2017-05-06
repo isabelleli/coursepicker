@@ -14,7 +14,8 @@ public class TesterGUI {
 
     //create a panel, and add it to the frame
     SearchTest test = new SearchTest();
-    ScheduleTabPanel panel = new ScheduleTabPanel(test);
+    //ScheduleTabPanel2 panel = new ScheduleTabPanel2(test);
+    Tester panel = new Tester(test);
     frame.getContentPane().add(panel);
     
     frame.pack();
