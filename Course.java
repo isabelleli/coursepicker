@@ -27,7 +27,7 @@ public class Course{
     professor = infoArray[3];
     time = infoArray[4];
     
-    time.replaceAll(" ","");
+    time = time.replaceAll("\\s","");
     String [] times = time.split("-");
     date = times[0];
     startTime = times[1];
