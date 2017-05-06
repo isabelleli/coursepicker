@@ -30,17 +30,17 @@ public class ScheduleTabPanel2 extends JPanel {
     official = new ImageIcon("images/pink.png");
     int counter = 0;
     
-    buttons = new JButton[10][5];
-    timeLabel = new JLabel[16];
+    courses = new LinkedList<JButton>();
+    courseInfo = new LinkedList<Course>();
+    
+    buttons = new JButton[31][5];
+    timeLabel = new JLabel[31];
     weekdays = new JLabel[5];
     times = new String[] {"08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
       "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00",
       "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"}; //all of the times for the calendar
     
     String[] days = {"M", "T", "W", "TH", "F"};
-    
-    courses = new LinkedList<JButton>();
-    courseInfo = new LinkedList<Course>();
     
     for (int i = 0; i < timeLabel.length; i++) {
       JLabel hourLabel = new JLabel(times[i]); //initializes a time label
@@ -51,8 +51,6 @@ public class ScheduleTabPanel2 extends JPanel {
       weekdays[n] = dayLabel;
     }
     
-    //System.out.println(Arrays.toString(timeLabel)); testing code
-    
     //beginning the arrangement of the panel
     setLayout(new FlowLayout()); //use FlowLayout to clearly separate the parts of the tabbed panel
     
@@ -62,32 +60,30 @@ public class ScheduleTabPanel2 extends JPanel {
     searchResults = new JLabel("Search results will appear here.",
                                SwingConstants.CENTER);
     top.add(searchResults);
+
+    for (int m = 0; m < tester.getSize(); m++) {
+      String[] dates = tester.getClass(m).getDate();
+      String d = "";
+      for (int a = 0; a < dates.length; a++) {
+        if (dates[a] != null) {
+          d += dates[a];
+        }
+      }
+      String s = tester.getClass(m).getStartTime();
+      String e = tester.getClass(m).getEndTime();
+      Time start = new Time(s); 
+      Time end = new Time(e);
+      JButton course = new JButton();
+      course.setText("<html>Course: " + tester.getClass(m).getTitle() + "<br>Time: " + s + "-" + e + "<br>Meeting times: " + 
+                     d + "<br>Professor: " + tester.getClass(m).getProf());
+      course.addActionListener(new ButtonListener());
+      top.add(course);
+      course.setActionCommand(Integer.toString(counter));
+      courses.add(course);
+      courseInfo.add(tester.getClass(m));
+      counter++;
+    }
     
-   
-    
-//    for (int m = 0; m < tester.getSize(); m++) {
-//      String[] dates = tester.getClass(m).getDate();
-//      String d = "";
-//      for (int a = 0; a < dates.length; a++) {
-//        if (dates[a] != null) {
-//          d += dates[a];
-//        }
-//      }
-//      String s = tester.getClass(m).getStartTime();
-//      String e = tester.getClass(m).getEndTime();
-//      Time start = new Time(s); 
-//      Time end = new Time(e);
-//      JButton course = new JButton();
-//      course.setText("<html>Course: " + tester.getClass(m).getTitle() + "<br>Time: " + s + "-" + e + "<br>Meeting times: " + 
-//                     d + "<br>Professor: " + tester.getClass(m).getProf());
-//      course.addActionListener(new ButtonListener());
-//      top.add(course);
-//      course.setActionCommand(Integer.toString(counter));
-//      courses.add(course);
-//      courseInfo.add(tester.getClass(m));
-//      counter++;
-//    }
-   
     add(top); //adds top panel to overall ScheduleTabPanel
     
     JPanel middle = new JPanel(new GridBagLayout());
@@ -98,12 +94,6 @@ public class ScheduleTabPanel2 extends JPanel {
       c.gridx = 0; //gridx set to 0 so that all the time labels are in the first column
       c.insets = new Insets(3, 3, 3, 3); //inserts padding in between each time label
       middle.add(timeLabel[j], c);
-      
-      c.gridy = 0; //set to 0 so that all day labels are in the first row
-      c.gridx = j + 1; //sets column position of the day label
-      c.insets = new Insets(3, 3, 3, 3); //inserts padding between day label
-      middle.add(weekdays[j], c);
-      c.gridy = j + 1; //sets the row position of the button to j
       for (int k = 0; k < buttons[j].length; k++) {
         c.gridx = k + 1; //sets the column position of the button to k
         buttons[j][k] = new JButton("");
@@ -112,6 +102,13 @@ public class ScheduleTabPanel2 extends JPanel {
         middle.add(buttons[j][k], c);
         buttons[j][k].setEnabled(false);
       }
+    }
+    for (int m = 0; m < weekdays.length; m++) {
+      c.gridy = 0; //set to 0 so that all day labels are in the first row
+      c.gridx = m + 1; //sets column position of the day label
+      c.insets = new Insets(3, 3, 3, 3); //inserts padding between day label
+      middle.add(weekdays[m], c);
+      c.gridy = m + 1; //sets the row position of the button to j
     }
     
     add(middle);

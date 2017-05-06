@@ -21,11 +21,13 @@ public class ScheduleTabPanel2 extends JPanel {
   private ImageIcon option;
   private ImageIcon official;
   private JFrame frame;
+  private FinalClasses finalClasses;
   
   
-  public ScheduleTabPanel2(SearchTest search) { //will take objects later
+  public ScheduleTabPanel2(SearchTest search, FinalClasses fclasses) { //will take objects later
     //initializing everything
     tester = search;
+    finalClasses = fclasses;
     option = new ImageIcon("images/blue.jpg");
     official = new ImageIcon("images/pink.png");
     int counter = 0;
