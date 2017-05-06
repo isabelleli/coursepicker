@@ -8,12 +8,14 @@ import java.util.*;
 public class Course{
   //instance variables
   private String crn;
-  private String date;
   private String time;
   private String professor;
   private String section;
   private String name;
   private String title;
+  private String endTime;
+  private String startTime;
+  private String date;
     
   public Course(String c, String[] info) { //second parameter is CourseInformation info;
     crn = c;
@@ -24,6 +26,12 @@ public class Course{
     section = infoArray[2];
     professor = infoArray[3];
     time = infoArray[4];
+    
+    time.replaceAll(" ","");
+    String [] times = time.split("-");
+    date = times[0];
+    startTime = times[1];
+    endTime = times[2];
     
 
   }
@@ -74,6 +82,14 @@ public class Course{
     return name;
   }
   
+  public String getEndTime() {
+    return endTime;
+  }
+  
+  public String getStartTime() {
+    return startTime;
+  }
+                           
 
   public String toString() {
     String r = "";
@@ -86,14 +102,13 @@ public class Course{
   }
   
   public static void main(String[] args) {
-    String[] d = {"MTH", "09:50AM", "Eni", "01", "08:30AM","CS", "111"};
-    String[] b = {"MTTHF", "10:50AM", "Eni", "01", "09:40AM","CS", "240"};
+    String[] d = {"CS 111", "Intro to CS", "01", "Eni", "MWT - 9:50AM - 11:00AM"};
     Course c = new Course("56789", d);
+    System.out.println(c.getStartTime());
+    System.out.println(c.getEndTime());
     System.out.println(Arrays.toString(c.getDate()));
-    Course f = new Course("56789", b);
-    System.out.println(Arrays.toString(f.getDate()));
     System.out.println(c);
-    System.out.println(f);
+
 
   }
 }

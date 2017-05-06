@@ -9,22 +9,22 @@ public class Course{
   //instance variables
   private String crn;
   private String date;
-  private String startTime;
-  private String endTime;
+  private String time;
   private String professor;
-  private String session;
+  private String section;
+  private String name;
   private String title;
     
   public Course(String c, String[] info) { //second parameter is CourseInformation info;
     crn = c;
     String[] infoArray = info;
     //String[] infoArray = info.searchDetails(c); //questionable? may need to copy entire array instead of just reading off
-    date = infoArray[0];
-    endTime = infoArray[1]; 
-    professor = infoArray[2];
-    session = infoArray[3];
-    startTime = infoArray[4];
-    title = infoArray[5];
+    title = infoArray[0];
+    name = infoArray[1]; 
+    section = infoArray[2];
+    professor = infoArray[3];
+    time = infoArray[4];
+    
 
   }
   
@@ -54,30 +54,31 @@ public class Course{
     return dates;
   }
   
-  public String getStartTime(){
-    return startTime;
-  }
-  
-  public String getEndTime(){
-    return endTime;
+  public String getTime(){
+    return time;
   }
   
   public String getProf(){
     return professor;
   }
   
-  public String getSession(){
-    return session;
+  public String getSection(){
+    return section;
   }
   
   public String getTitle(){
     return title;
   }
   
+  public String getName(){
+    return name;
+  }
+  
+
   public String toString() {
     String r = "";
-    r += "Title: " + title + "\nSession: " + session + "\nCRN: " + crn + "\nProfessor: " + professor + "\nTime: "
-      + startTime + "-" + endTime + "\nDate: " + date;
+    r += "Title: " + title + "\nSession: " + section + "\nCRN: " + crn + "\nProfessor: " + professor + "\nTime: "
+      + time;
     
     return r;
     
