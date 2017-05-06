@@ -56,7 +56,7 @@ public class SearchTabPanel extends JPanel{
         try {
           String name = courseName.getText().toUpperCase();
           userSearch.searchCourse(name);
-          results.setText(userSearch.getSearchResults().toString());     
+          results.setText(userSearch.getSearchResults().toString());  
         } catch (IllegalArgumentException e){
           results.setText("Invalid course name. Please search again.");
         }
