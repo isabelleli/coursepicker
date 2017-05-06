@@ -10,22 +10,27 @@ import java.util.*;
 public class Search{
   //instance variables
   private LinkedList<Course> searchResults;
-  private CourseInformationTest courseInfo;
+  private CourseInformation courseInfo;
   private LinkedList<String> crns;
   
-  public Search(CourseInformationTest test){
+  public Search(CourseInformation info){
     searchResults = new LinkedList<Course>(); 
-    courseInfo = test;
+    courseInfo = info;
     crns = new LinkedList<String>();
   }
   
-  public void searchCourse(String title) {
-    crns = courseInfo.searchCRNs(title);
-    
-    for (int i = 0; i < crns.size(); i++){
-      String[] details = courseInfo.searchDetails(crns.get(i));
-      Course newClass = new Course(crns.get(i), details);
-      searchResults.add(newClass); 
+  public void searchCourse(String title) throws IllegalArgumentException{
+    if (courseInfo.getFirstTable().containsKey(title)){
+      searchResults.clear(); 
+      crns = courseInfo.searchCRNs(title);
+      for (int i = 0; i < crns.size(); i++){
+        String crn = crns.get(i);
+        String[] details = courseInfo.searchDetails(crn);
+        Course newClass = new Course(crn, details);
+        searchResults.add(newClass); 
+      }
+    } else { 
+      throw new IllegalArgumentException();
     }
   }
 
@@ -39,7 +44,7 @@ public class Search{
   
   
   public static void main(String[] args) {
-    CourseInformationTest test = new CourseInformationTest();
+    CourseInformation test = new CourseInformation("CourseInfo.txt");
     
     Search bob = new Search(test);
     bob.searchCourse("CS 111");
