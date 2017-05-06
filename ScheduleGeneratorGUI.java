@@ -22,8 +22,7 @@ public class ScheduleGeneratorGUI {
     // Creates tab pane and adds different tabs to it.
     JTabbedPane tp = new JTabbedPane();
     tp.addTab("Search", new SearchTabPanel(userSearch));
-    Search s = new Search(info);
-    tp.addTab("Schedule Generator", new ScheduleTabPanel2(s, classList)); 
+    tp.addTab("Schedule Generator", new ScheduleTabPanel2(userSearch, classList)); 
     
     // Makes sure the user can actually see things
     frame.getContentPane().add(tp);
