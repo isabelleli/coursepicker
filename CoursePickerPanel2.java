@@ -1,26 +1,28 @@
-/* CoursePickerPanel.java
+/* CoursePickerPanel2.java
  * CS 230 final project
  * Modified by: ili
- * Modified date: 05/07/17
+ * Modified date: 05/06/17
  * ili, jwang17, slu5
  */
 
+//have to do oNE BIG CLASS 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.util.*;
 
-public class CoursePickerPanel extends JPanel{
+public class CoursePickerPanel2 extends JPanel{
+  private JTabbedPane tp;
   private Search searchObj;
   private FinalClasses fClasses;
-  private int counter;
-  
   private JButton searchButton;
   private JTextField courseName;
+  //private JLabel results;
+  
   private JLabel searchResults; //text that displays course search results of user
   private JPanel buttonResults;
-  private JPanel leftSide;
+  private JPanel searchTab;
   private JButton[][] buttons; 
   private JLabel[] timeLabel; 
   private JLabel[] weekdays; 
@@ -28,42 +30,50 @@ public class CoursePickerPanel extends JPanel{
   private String[] times; 
   private LinkedList<JButton> courses;  
   private SearchTest tester;
-  private ImageIcon option;
   private ImageIcon official;
   private FinalClasses finalClasses; 
+  private int counter;
   
   
-  public CoursePickerPanel(Search sObj, FinalClasses f) {
+  public CoursePickerPanel2(Search sObj, FinalClasses f) {
+    tp = new JTabbedPane();
+    
     searchObj = sObj;
-    fClasses = f;
+    finalClasses = f;
+    official = new ImageIcon("Images/red.jpg");
     counter = 0; //used with setActionCommand to give each course button a unique ID
     
-    setLayout(new FlowLayout()); //overall layout of the scheduling panel
-    
-    leftSide = new JPanel();
-    leftSide.setLayout(new BoxLayout(leftSide, BoxLayout.PAGE_AXIS));
-
-    JPanel search = new JPanel(new BorderLayout());
-    search.setBackground(Color.pink);
-    search.add(new JLabel("Please enter the title of the course you wish to take and click search. Example: CS 111"), BorderLayout.NORTH);
-    search.add(new JLabel("Course Title: "), BorderLayout.WEST);  
+    searchTab = new JPanel();
+    searchTab.setLayout(new BoxLayout(searchTab, BoxLayout.PAGE_AXIS));
+    JPanel searchFunction = new JPanel(new BorderLayout());
+    searchFunction.setMaximumSize(new Dimension(500, 200));
+    searchFunction.setBackground(Color.pink);
+    searchFunction.add(new JLabel("Please enter the title of the course you wish to take and click search. Example: CS 111"), BorderLayout.NORTH);
+    searchFunction.add(new JLabel("Course Title: "), BorderLayout.WEST);  
     
     searchButton = new JButton("Search");
     searchButton.addActionListener(new ButtonListener(searchObj));
-    search.add(searchButton, BorderLayout.EAST);
+    searchFunction.add(searchButton, BorderLayout.EAST);
     
     courseName = new JTextField();
-    search.add(courseName, BorderLayout.CENTER); 
+    searchFunction.add(courseName, BorderLayout.CENTER); 
     
     searchResults = new JLabel("Buttons will appear where you can add your course.",
                                SwingConstants.CENTER);
-    search.add(searchResults, BorderLayout.SOUTH);
+    searchFunction.add(searchResults, BorderLayout.SOUTH);
     
-    leftSide.add(search);
+    searchTab.add(searchFunction);
+    tp.add("Search", searchTab);
     
-    add(leftSide);
-
+//    setLayout(new FlowLayout());
+//    
+//    leftSide = new JPanel();
+//    leftSide.setLayout(new BoxLayout(leftSide, BoxLayout.PAGE_AXIS));
+    
+    JPanel schedule = new JPanel(new FlowLayout());
+    
     buttonResults = new JPanel();
+    buttonResults.setLayout(new WrapLayout());
     
     courses = new LinkedList<JButton>(); //stores all of the buttons representing the classes from the Search object
     
@@ -112,10 +122,17 @@ public class CoursePickerPanel extends JPanel{
       c.gridy = k + 1; //sets the row position of the button to j
     }
     
-    add(calendar);
+    schedule.add(calendar);
+    
+    
+    tp.add("Schedule", schedule);
+    add(tp);
   }
   
-  public void setSearchResults() {
+  private void setSearchResults() {
+    buttonResults.removeAll();
+    courses.clear();
+    
     for (int g = 0; g < searchObj.getSize(); g++) {
       String[] dates = searchObj.getCourse(g).getDate(); //gets the String array of dates that the class occurs
       String d = ""; 
@@ -133,55 +150,19 @@ public class CoursePickerPanel extends JPanel{
       JButton course = new JButton();
       course.setText("<html>Course: " + searchObj.getCourse(g).getTitle() + "<br>Time: " + s + "-" + e + 
                      "<br>Meeting times: " + d + "<br>Professor: " + searchObj.getCourse(g).getProf());
+
       course.addActionListener(new ButtonListener(searchObj));
       course.setActionCommand(Integer.toString(counter)); //ActionCommand represents a unique idenfication for the button
       courses.add(course); //adds button to the LinkedList of course buttons
       counter++;
-      
+      course.setPreferredSize(new Dimension(250, 75));
       buttonResults.add(course);
     }
-    leftSide.add(buttonResults);
-   
-  }
-  
-
-private class ButtonListener implements ActionListener{
-  //CourseInformationTest object, containing hash tables, is an input
-  private Search searchObj;
-  
-  public ButtonListener(Search s){
-    //passes Search object into ButtonListener and calls the super() constructor
-    super();
-    searchObj = s;
-  }
-  
-  public void actionPerformed(ActionEvent event) {
-    //creates new search whenever search button is pressed, adds new info to searchResults
-    if (event.getSource() == searchButton) {
-      try {
-        String name = courseName.getText().toUpperCase();
-        searchObj.searchCourse(name);
-        setSearchResults();
-        //results.setText(searchObj.getSearchResults().toString());  
-      } catch (IllegalArgumentException e){
-        System.out.println("blah");
-        //results.setText("Invalid course name. Please search again.");
-      }
-    }
-    else {
-      int action = Integer.parseInt(event.getActionCommand()); //gets the int representation of the ActionCommand
-      for (int n = 0; n < courses.size(); n++) { 
-        //searches through the LinkedList of buttons to find a matching actionCommand
-        if (Integer.parseInt(courses.get(n).getActionCommand()) == action) {
-          courses.get(n).setEnabled(false);
-          finalClasses.addClass(searchObj.getCourse(n));
-          addToCalendar(n, searchObj.getCourse(n));
-        }
-      }
-      
-    }
+    searchTab.add(buttonResults);
+    
   }
   private void addToCalendar(int index, Course c) {
+    String[] dates = c.getDate();
     Time start = new Time(c.getStartTime());
     Time end = new Time(c.getEndTime());
     
@@ -192,32 +173,78 @@ private class ButtonListener implements ActionListener{
     //gets corresponding index position for the buttons
     int indexStart = Arrays.asList(times).indexOf(start.toString());
     int indexEnd = Arrays.asList(times).indexOf(end.toString());
-    
+    System.out.println(indexStart);
+    System.out.println(indexEnd);
     //shades the places where the class would occur on the calendar
-    for (int m = indexStart; m <= indexEnd; m++) {
-      buttons[m][0].setBorder(BorderFactory.createEmptyBorder());
-      buttons[m][0].setIcon(official);
-      buttons[m][0].addMouseListener(new MouseHover(index));
-    } 
+    for (int m = 0; m < dates.length; m++) {
+      if (dates[m] != null) {
+        int dayPos = Arrays.asList(days).indexOf(dates[m]);
+        
+        for (int n = indexStart; n <= indexEnd; n++) {
+          buttons[n][dayPos].setBorder(BorderFactory.createEmptyBorder());
+          buttons[n][dayPos].setIcon(official);
+          buttons[n][dayPos].addMouseListener(new MouseHover(index));
+        }
+      }
+    }
   }
-}
-private class MouseHover implements MouseListener {
-  private int i;
-  public MouseHover(int index) {
-    i = index;
+  
+  
+  private class ButtonListener implements ActionListener{
+    //CourseInformationTest object, containing hash tables, is an input
+    private Search searchObj;
+    
+    public ButtonListener(Search s){
+      //passes Search object into ButtonListener and calls the super() constructor
+      super();
+      searchObj = s;
+    }
+    
+    public void actionPerformed(ActionEvent event) {
+      //creates new search whenever search button is pressed, adds new info to searchResults
+      if (event.getSource() == searchButton) {
+        try {
+          String name = courseName.getText().toUpperCase();
+          searchObj.searchCourse(name);
+          setSearchResults();
+          //results.setText(searchObj.getSearchResults().toString());  
+        } catch (IllegalArgumentException e){
+          System.out.println("blah");
+          //results.setText("Invalid course name. Please search again.");
+        }
+      }
+      else {
+        int action = Integer.parseInt(event.getActionCommand()); //gets the int representation of the ActionCommand
+        for (int n = 0; n < courses.size(); n++) { 
+          //searches through the LinkedList of buttons to find a matching actionCommand
+          if (Integer.parseInt(courses.get(n).getActionCommand()) == action) {
+            courses.get(n).setEnabled(false);
+            finalClasses.addClass(searchObj.getCourse(n));
+            tp.setSelectedIndex(1);
+            addToCalendar(n, searchObj.getCourse(n));
+          }
+        }
+        
+      }
+    }
   }
-  public void mouseEntered(MouseEvent e) {
-    JOptionPane.showMessageDialog(null, courses.get(i).getText());
+  private class MouseHover implements MouseListener {
+    private int i;
+    public MouseHover(int index) {
+      i = index;
+    }
+    public void mouseEntered(MouseEvent e) {
+      JOptionPane.showMessageDialog(null, courses.get(i).getText());
+    }
+    public void mouseExited(MouseEvent e) {
+    }
+    public void mouseClicked(MouseEvent e) {
+    }
+    public void mousePressed(MouseEvent e) {
+    }
+    public void mouseReleased(MouseEvent e) {
+    }
   }
-  public void mouseExited(MouseEvent e) {
-  }
-  public void mouseClicked(MouseEvent e) {
-  }
-  public void mousePressed(MouseEvent e) {
-  }
-  public void mouseReleased(MouseEvent e) {
-  }
-}
 }
 
 
