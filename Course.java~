@@ -16,7 +16,7 @@ public class Course{
   private String endTime;
   private String startTime;
   private String date;
-    
+  
   public Course(String c, String[] info) { //second parameter is CourseInformation info;
     crn = c;
     String[] infoArray = info;
@@ -33,7 +33,7 @@ public class Course{
     startTime = times[1];
     endTime = times[2];
     
-
+    
   }
   
   public String getCRN(){
@@ -46,17 +46,23 @@ public class Course{
       date = date.replace("TH", ""); //takes out TH from date
       thursday = true; 
     }
-    String[] days = date.split("(?!^)"); //method of splitting by character taken from stackoverflow 
-    //(http://stackoverflow.com/questions/5235401/split-string-into-array-of-character-strings)
     
     String[] dates = new String[5];
     
-    for (int i = 0; i < days.length; i++) {
-      dates[i] = days[i]; //copies all of the characters split from date and transfers it to dates
+    if (date.equals("") && thursday) {
+      dates[0] = "TH";
     }
-    
-    if (thursday) {
-      dates[days.length] = "TH"; //adds TH at the end of the array
+    else {
+      
+      String[] days = date.split("(?!^)"); //method of splitting by character taken from stackoverflow 
+      //(http://stackoverflow.com/questions/5235401/split-string-into-array-of-character-strings)
+      for (int i = 0; i < days.length; i++) {
+        dates[i] = days[i]; //copies all of the characters split from date and transfers it to dates
+      }
+      
+      if (thursday) {
+        dates[days.length] = "TH"; //adds TH at the end of the array
+      }
     }
     
     return dates;
@@ -89,8 +95,8 @@ public class Course{
   public String getStartTime() {
     return startTime;
   }
-                           
-
+  
+  
   public String toString() {
     String r = "";
     r += "Title: " + title + "\nSession: " + section + "\nCRN: " + crn + "\nProfessor: " + professor + "\nTime: "
@@ -102,14 +108,14 @@ public class Course{
   }
   
   public static void main(String[] args) {
-    String[] d = {"CS 111", "Intro to CS", "01", "Eni", "MWT - 9:50AM - 11:00AM"};
+    String[] d = {"CS 111", "Intro to CS", "01", "Eni", "TH - 1:30PM-2:30PM"};
     Course c = new Course("56789", d);
-    System.out.println(c.getStartTime());
-    System.out.println(c.getEndTime());
+//    System.out.println(c.getStartTime());
+//    System.out.println(c.getEndTime());
     System.out.println(Arrays.toString(c.getDate()));
     System.out.println(c);
-
-
+    
+    
   }
 }
 

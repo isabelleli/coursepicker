@@ -148,14 +148,15 @@ public class CoursePickerPanel2 extends JPanel{
       
       //creates new button to be displayed next to calendar; user would click this to add course to their calendar
       JButton course = new JButton();
-      course.setText("<html>Course: " + searchObj.getCourse(g).getTitle() + "<br>Time: " + s + "-" + e + 
-                     "<br>Meeting times: " + d + "<br>Professor: " + searchObj.getCourse(g).getProf());
-
+      course.setText("<html>Course: " + searchObj.getCourse(g).getTitle() + "<br>Meeting times: " + d + 
+                     "<br>Time: " + s + "-" + e + "<br>Professor: " + searchObj.getCourse(g).getProf() + 
+                     "<br>Section: " + searchObj.getCourse(g).getSection());
+      course.setFont(new Font("Calibri", Font.PLAIN, 11));
       course.addActionListener(new ButtonListener(searchObj));
       course.setActionCommand(Integer.toString(counter)); //ActionCommand represents a unique idenfication for the button
       courses.add(course); //adds button to the LinkedList of course buttons
       counter++;
-      course.setPreferredSize(new Dimension(250, 75));
+      course.setPreferredSize(new Dimension(230, 80));
       buttonResults.add(course);
     }
     searchTab.add(buttonResults);

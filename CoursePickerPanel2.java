@@ -122,9 +122,7 @@ public class CoursePickerPanel2 extends JPanel{
       c.gridy = k + 1; //sets the row position of the button to j
     }
     
-    schedule.add(calendar);
-    
-    
+    schedule.add(calendar); 
     tp.add("Schedule", schedule);
     add(tp);
   }
@@ -148,7 +146,7 @@ public class CoursePickerPanel2 extends JPanel{
       
       //creates new button to be displayed next to calendar; user would click this to add course to their calendar
       JButton course = new JButton();
-      course.setText("<html>Course: " + searchObj.getCourse(g).getTitle() + "<br>Meeting times: " + d + 
+      course.setText("<html> CRN: " + searchObj.getCourse(g).getCRN() + "<br>Course: " + searchObj.getCourse(g).getTitle() + "<br>Meeting times: " + d + 
                      "<br>Time: " + s + "-" + e + "<br>Professor: " + searchObj.getCourse(g).getProf() + 
                      "<br>Section: " + searchObj.getCourse(g).getSection());
       course.setFont(new Font("Calibri", Font.PLAIN, 11));
@@ -156,12 +154,14 @@ public class CoursePickerPanel2 extends JPanel{
       course.setActionCommand(Integer.toString(counter)); //ActionCommand represents a unique idenfication for the button
       courses.add(course); //adds button to the LinkedList of course buttons
       counter++;
-      course.setPreferredSize(new Dimension(230, 80));
+      course.setPreferredSize(new Dimension(230, 90));
       buttonResults.add(course);
     }
     searchTab.add(buttonResults);
     
   }
+  
+  
   private void addToCalendar(int index, Course c) {
     String[] dates = c.getDate();
     Time start = new Time(c.getStartTime());
@@ -190,6 +190,44 @@ public class CoursePickerPanel2 extends JPanel{
     }
   }
   
+  private void removeFromCalendar(Course c) {
+    String[] dates = c.getDate();
+    Time start = new Time(c.getStartTime());
+    Time end = new Time(c.getEndTime());
+    
+    //rounds both start and end time to nearest half hour
+    start.roundToNearestHalfHour(); 
+    end.roundToNearestHalfHour();
+    
+    //gets corresponding index position for the buttons
+    int indexStart = Arrays.asList(times).indexOf(start.toString());
+    int indexEnd = Arrays.asList(times).indexOf(end.toString());
+    System.out.println(indexStart);
+    System.out.println(indexEnd);
+    //shades the places where the class would occur on the calendar
+    for (int m = 0; m < dates.length; m++) {
+       int dayPos = Arrays.asList(days).indexOf(dates[m]);
+       for (int n = indexStart; n <= indexEnd; n++) {
+          buttons[n][dayPos].setBorder(BorderFactory.createEmptyBorder());
+          buttons[n][dayPos].setIcon(null);
+          MouseListener[] mouseListeners = buttons[n][dayPos].getMouseListeners();
+          for (MouseListener mouseListener : mouseListeners) {
+            buttons[n][dayPos].removeMouseListener(mouseListener);
+          }
+       }
+    }
+  }
+ 
+  private int getCourseIndex(String text) {
+    String crn = text.substring(12,17);
+    System.out.println(crn);
+    for (int i = 0; i < finalClasses.getSize(); i++) {
+      if (crn.equals(finalClasses.getClass(i).getCRN())) {
+        return i;
+      }
+    }
+    return -1;
+  }
   
   private class ButtonListener implements ActionListener{
     //CourseInformationTest object, containing hash tables, is an input
@@ -219,7 +257,7 @@ public class CoursePickerPanel2 extends JPanel{
         for (int n = 0; n < courses.size(); n++) { 
           //searches through the LinkedList of buttons to find a matching actionCommand
           if (Integer.parseInt(courses.get(n).getActionCommand()) == action) {
-            courses.get(n).setEnabled(false);
+            //courses.get(n).setEnabled(false);
             finalClasses.addClass(searchObj.getCourse(n));
             tp.setSelectedIndex(1);
             addToCalendar(n, searchObj.getCourse(n));
@@ -235,7 +273,16 @@ public class CoursePickerPanel2 extends JPanel{
       i = index;
     }
     public void mouseEntered(MouseEvent e) {
-      JOptionPane.showMessageDialog(null, courses.get(i).getText());
+      Object[] options = { "OK", "REMOVE" };
+      int response = JOptionPane.showOptionDialog(null, courses.get(i).getText(), "Course Selection", 
+                                   JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+      if (response == 1) {
+         int index = getCourseIndex(courses.get(i).getText());
+         //removeFromCalendar(finalClasses.getClass(index));
+         System.out.println("before: " + finalClasses);
+         finalClasses.removeClass(index);
+         System.out.println("after: " + finalClasses);
+      }
     }
     public void mouseExited(MouseEvent e) {
     }
