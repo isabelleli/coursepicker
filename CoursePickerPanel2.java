@@ -48,7 +48,7 @@ public class CoursePickerPanel2 extends JPanel{
     JPanel searchFunction = new JPanel(new BorderLayout());
     searchFunction.setMaximumSize(new Dimension(500, 200));
     searchFunction.setBackground(Color.pink);
-    searchFunction.add(new JLabel("Please enter the title of the course you wish to take and click search. Example: CS 111"), BorderLayout.NORTH);
+    searchFunction.add(new JLabel("<html>Please enter the title of the course you wish to take and click search.<br>Example: CS 111</html>"), BorderLayout.NORTH);
     searchFunction.add(new JLabel("Course Title: "), BorderLayout.WEST);  
     
     searchButton = new JButton("Search");
@@ -103,13 +103,13 @@ public class CoursePickerPanel2 extends JPanel{
     for (int i = 0; i < buttons.length; i++) {
       c.gridy = i + 1; //sets the row position of the time label
       c.gridx = 0; //gridx set to 0 so that all the time labels are in the first column
-      c.insets = new Insets(3, 3, 3, 3); //inserts padding in between each time label
+      c.insets = new Insets(2, 2, 2, 2); //inserts padding in between each time label
       calendar.add(timeLabel[i], c); //adds the time labels to the side of the calendar
       for (int j = 0; j < buttons[i].length; j++) {
         c.gridx = j + 1; //sets the column position of the button to k
         buttons[i][j] = new JButton("");
-        buttons[i][j].setPreferredSize(new Dimension(50, 40)); //sets the size of the buttons
-        c.insets = new Insets(-3, -3, -3, -3); //insets with negative values removes spaces in between the buttons
+        buttons[i][j].setPreferredSize(new Dimension(90, 20)); //sets the size of the buttons
+        c.insets = new Insets(-2, -2, -2, -2); //insets with negative values removes spaces in between the buttons
         calendar.add(buttons[i][j], c);
         buttons[i][j].setEnabled(false); //prevents user from clicking any buttons on the calendar
       }
@@ -148,14 +148,15 @@ public class CoursePickerPanel2 extends JPanel{
       
       //creates new button to be displayed next to calendar; user would click this to add course to their calendar
       JButton course = new JButton();
-      course.setText("<html>Course: " + searchObj.getCourse(g).getTitle() + "<br>Time: " + s + "-" + e + 
-                     "<br>Meeting times: " + d + "<br>Professor: " + searchObj.getCourse(g).getProf());
-
+      course.setText("<html>Course: " + searchObj.getCourse(g).getTitle() + "<br>Meeting times: " + d + 
+                     "<br>Time: " + s + "-" + e + "<br>Professor: " + searchObj.getCourse(g).getProf() + 
+                     "<br>Section: " + searchObj.getCourse(g).getSection());
+      course.setFont(new Font("Calibri", Font.PLAIN, 11));
       course.addActionListener(new ButtonListener(searchObj));
       course.setActionCommand(Integer.toString(counter)); //ActionCommand represents a unique idenfication for the button
       courses.add(course); //adds button to the LinkedList of course buttons
       counter++;
-      course.setPreferredSize(new Dimension(250, 75));
+      course.setPreferredSize(new Dimension(230, 80));
       buttonResults.add(course);
     }
     searchTab.add(buttonResults);

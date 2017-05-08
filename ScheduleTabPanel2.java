@@ -98,13 +98,13 @@ public class ScheduleTabPanel2 extends JPanel {
     for (int i = 0; i < buttons.length; i++) {
       c.gridy = i + 1; //sets the row position of the time label
       c.gridx = 0; //gridx set to 0 so that all the time labels are in the first column
-      c.insets = new Insets(3, 3, 3, 3); //inserts padding in between each time label
+      c.insets = new Insets(2, 2, 2, 2); //inserts padding in between each time label
       middle.add(timeLabel[i], c); //adds the time labels to the side of the calendar
       for (int j = 0; j < buttons[i].length; j++) {
         c.gridx = j + 1; //sets the column position of the button to k
         buttons[i][j] = new JButton("");
-        buttons[i][j].setPreferredSize(new Dimension(50, 40)); //sets the size of the buttons
-        c.insets = new Insets(-3, -3, -3, -3); //insets with negative values removes spaces in between the buttons
+        buttons[i][j].setPreferredSize(new Dimension(90, 20)); //sets the size of the buttons
+        c.insets = new Insets(-2, -2, -2, -2); //insets with negative values removes spaces in between the buttons
         middle.add(buttons[i][j], c);
         buttons[i][j].setEnabled(false); //prevents user from clicking any buttons on the calendar
       }
