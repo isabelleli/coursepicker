@@ -41,20 +41,22 @@ public class Course{
   }
   
   public String[] getDate(){
+    String strDate = date;
+
     boolean thursday = false; //a way to determine whether "TH" needs to be added to the array at the end
-    if (date.contains("TH")) {
-      date = date.replace("TH", ""); //takes out TH from date
+    if (strDate.contains("TH")) {
+      strDate = strDate.replace("TH", ""); //takes out TH from date
       thursday = true; 
     }
     
     String[] dates = new String[5];
     
-    if (date.equals("") && thursday) {
+    if (strDate.equals("") && thursday) {
       dates[0] = "TH";
     }
     else {
       
-      String[] days = date.split("(?!^)"); //method of splitting by character taken from stackoverflow 
+      String[] days = strDate.split("(?!^)"); //method of splitting by character taken from stackoverflow 
       //(http://stackoverflow.com/questions/5235401/split-string-into-array-of-character-strings)
       for (int i = 0; i < days.length; i++) {
         dates[i] = days[i]; //copies all of the characters split from date and transfers it to dates
@@ -64,7 +66,6 @@ public class Course{
         dates[days.length] = "TH"; //adds TH at the end of the array
       }
     }
-    
     return dates;
   }
   
@@ -108,7 +109,7 @@ public class Course{
   }
   
   public static void main(String[] args) {
-    String[] d = {"CS 111", "Intro to CS", "01", "Eni", "TH - 1:30PM-2:30PM"};
+    String[] d = {"CS 111", "Intro to CS", "01", "Eni", "TH - 10:30 AM - 12:20 PM"};
     Course c = new Course("56789", d);
 //    System.out.println(c.getStartTime());
 //    System.out.println(c.getEndTime());
