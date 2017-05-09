@@ -181,7 +181,7 @@ public class CoursePickerPanel2 extends JPanel{
       if (dates[m] != null) {
         int dayPos = Arrays.asList(days).indexOf(dates[m]); //gets the index corresponding to the day of the week
         for (int n = indexStart; n <= indexEnd; n++) {
-          if (buttons[n][dayPos].getIcon() != null) { 
+          if (!buttons[n][dayPos].getText().equals("")) { 
             exist = true;
           }
         }
@@ -274,10 +274,6 @@ public class CoursePickerPanel2 extends JPanel{
             addToCalendar(n, searchObj.getCourse(n));
             if (!exist) {
             finalClasses.addClass(searchObj.getCourse(n));
-//            System.out.println(searchObj.getCourse(n).getDate()[0]);
-//            System.out.println(searchObj.getCourse(n).getDate()[1]);
-//            System.out.println(searchObj.getCourse(n).getStartTime());
-//            System.out.println(searchObj.getCourse(n).getEndTime());
             tp.setSelectedIndex(1);
             }
             else {
@@ -318,4 +314,3 @@ public class CoursePickerPanel2 extends JPanel{
 }
 
 // cannot remove courses added in last round
-// time slots still include ";W"
