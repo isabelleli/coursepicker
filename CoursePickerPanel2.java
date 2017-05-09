@@ -192,7 +192,8 @@ public class CoursePickerPanel2 extends JPanel{
         if (dates[m] != null) {
           int dayPos = Arrays.asList(days).indexOf(dates[m]); //gets the index corresponding to the day of the week
           for (int n = indexStart; n <= indexEnd; n++) {
-          buttons[n][dayPos].setIcon(official);
+          buttons[n][dayPos].setText(c.getCRN());
+          //buttons[n][dayPos].setIcon(official);
           buttons[n][dayPos].addMouseListener(new MouseClicker(index));
           }
         }
@@ -218,8 +219,8 @@ public class CoursePickerPanel2 extends JPanel{
       if (dates[m] != null) {
         int dayPos = Arrays.asList(days).indexOf(dates[m]); //gets the index corresponding to the day of the week
         for (int n = indexStart; n <= indexEnd; n++) {
-          buttons[n][dayPos].setIcon(null);
-          
+          //buttons[n][dayPos].setIcon(null);
+          buttons[n][dayPos].setText("");
           //removes the mouselistener from the buttons corresponding to the class being removed
           MouseListener[] mouseListeners = buttons[n][dayPos].getMouseListeners();
           for (MouseListener mouseListener : mouseListeners) {
@@ -233,8 +234,7 @@ public class CoursePickerPanel2 extends JPanel{
   /* Helper method that searches through finalClasses
    * and removes the class with the same crn as the text inputed
    */
-  private int getCourseIndex(String text) {
-    String crn = text.substring(12,17);
+  private int getCourseIndex(String crn) {
     for (int i = 0; i < finalClasses.getSize(); i++) {
       if (crn.equals(finalClasses.getClass(i).getCRN())) {
         return i;
@@ -301,10 +301,11 @@ public class CoursePickerPanel2 extends JPanel{
     }
     public void mouseClicked(MouseEvent e) {
       Object[] options = { "OK", "REMOVE" };
-      int response = JOptionPane.showOptionDialog(null, courses.get(i).getText(), "Course Selection", 
+      String crn = ((JButton)e.getSource()).getText(); //crn of the course corresponding to said JButton
+      int index = getCourseIndex(crn); //index of the course in finalClasses
+      int response = JOptionPane.showOptionDialog(null, finalClasses.getClass(index).toString(), "Course Selection", 
                                                   JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
       if (response == 1) {
-        int index = getCourseIndex(courses.get(i).getText());
         removeFromCalendar(finalClasses.getClass(index));
         finalClasses.removeClass(index);
       }

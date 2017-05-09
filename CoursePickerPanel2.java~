@@ -21,7 +21,7 @@ public class CoursePickerPanel2 extends JPanel{
   private JPanel searchTab; //contains all of the elements to search a course
   private JButton searchButton;
   private JTextField courseName;
-  private JLabel searchResults; 
+  private JLabel searchResults;
   
   private JPanel buttonResults; //shows the grid of buttons representing courses
   private LinkedList<JButton> courses;  
@@ -185,7 +185,12 @@ public class CoursePickerPanel2 extends JPanel{
             exist = true;
           }
         }
-        if (!exist) {
+      }
+    }
+    if (!exist) {
+      for (int m = 0; m < dates.length; m++) {
+        if (dates[m] != null) {
+          int dayPos = Arrays.asList(days).indexOf(dates[m]); //gets the index corresponding to the day of the week
           for (int n = indexStart; n <= indexEnd; n++) {
           buttons[n][dayPos].setIcon(official);
           buttons[n][dayPos].addMouseListener(new MouseClicker(index));
