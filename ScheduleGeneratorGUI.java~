@@ -19,7 +19,7 @@ public class ScheduleGeneratorGUI {
     Search userSearch = new Search(info);
     FinalClasses classList = new FinalClasses();
 
-    CoursePickerPanel p = new CoursePickerPanel(userSearch, classList);
+    CoursePickerPanel2 p = new CoursePickerPanel2(userSearch, classList);
     // Creates tab pane and adds different tabs to it.
 //    JTabbedPane tp = new JTabbedPane();
 //    tp.addTab("Search", new SearchTabPanel(userSearch));

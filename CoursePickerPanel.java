@@ -1,4 +1,4 @@
-/* CoursePickerPanel2.java
+/* CoursePickerPanel.java
  * CS 230 final project
  * Modified by: ili
  * Modified date: 05/06/17
@@ -11,7 +11,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.util.*;
 
-public class CoursePickerPanel2 extends JPanel{
+public class CoursePickerPanel extends JPanel{
   private JTabbedPane tp;
   private Search searchObj;
   private FinalClasses finalClasses;
@@ -34,7 +34,7 @@ public class CoursePickerPanel2 extends JPanel{
   private boolean exist;
   
   
-  public CoursePickerPanel2(Search sObj, FinalClasses f) {
+  public CoursePickerPanel(Search sObj, FinalClasses f) {
     tp = new JTabbedPane();
     searchObj = sObj;
     finalClasses = f;
@@ -179,11 +179,9 @@ public class CoursePickerPanel2 extends JPanel{
     
     Time t1 = new Time(c.getStartTime());
     int start = t1.getTime();
-    System.out.println(start);
     
     Time t2 = new Time(c.getEndTime());
     int end = t2.getTime();
-    System.out.println(end);
 
     
     int indexStart = 0;
@@ -192,14 +190,12 @@ public class CoursePickerPanel2 extends JPanel{
     for (int p = 0; p <  times.length; p++) {
       if (times[p] >= start) {
         indexStart = p;
-        System.out.println("intStart" +indexStart);
         break;
       }
     }
     
     for (int q = times.length - 1; q > indexStart; q--) {
       if (times[q] <= end) {
-        System.out.println("intEnd" + q);
         indexEnd = q;
         break;
       }
@@ -235,11 +231,9 @@ public class CoursePickerPanel2 extends JPanel{
     
     Time t1 = new Time(c.getStartTime());
     int start = t1.getTime();
-    System.out.println(start);
     
     Time t2 = new Time(c.getEndTime());
     int end = t2.getTime();
-    System.out.println(end);
 
     
     int indexStart = 0;
@@ -248,14 +242,12 @@ public class CoursePickerPanel2 extends JPanel{
     for (int p = 0; p <  times.length; p++) {
       if (times[p] >= start) {
         indexStart = p;
-        System.out.println("intStart" +indexStart);
         break;
       }
     }
     
     for (int q = times.length - 1; q > indexStart; q--) {
       if (times[q] <= end) {
-        System.out.println("intEnd" + q);
         indexEnd = q;
         break;
       }
