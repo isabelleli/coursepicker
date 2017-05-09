@@ -21,7 +21,7 @@ public class CoursePickerPanel2 extends JPanel{
   private JPanel searchTab; //contains all of the elements to search a course
   private JButton searchButton;
   private JTextField courseName;
-  private JLabel searchResults; 
+  private JLabel searchResults;
   
   private JPanel buttonResults; //shows the grid of buttons representing courses
   private LinkedList<JButton> courses;  
@@ -32,6 +32,7 @@ public class CoursePickerPanel2 extends JPanel{
   private String[] days; 
   private ImageIcon official;
   private int counter;
+  private boolean exist;
   
   
   public CoursePickerPanel2(Search sObj, FinalClasses f) {
@@ -154,7 +155,7 @@ public class CoursePickerPanel2 extends JPanel{
       course.setActionCommand(Integer.toString(counter)); //ActionCommand represents a unique idenfication for the button
       courses.add(course); //adds button to the LinkedList of course buttons
       counter++;
-      course.setPreferredSize(new Dimension(230, 90));
+      course.setPreferredSize(new Dimension(230, 105));
       buttonResults.add(course);
     }
     
@@ -180,8 +181,20 @@ public class CoursePickerPanel2 extends JPanel{
       if (dates[m] != null) {
         int dayPos = Arrays.asList(days).indexOf(dates[m]); //gets the index corresponding to the day of the week
         for (int n = indexStart; n <= indexEnd; n++) {
+          if (buttons[n][dayPos].getIcon() != null) { 
+            exist = true;
+          }
+        }
+      }
+    }
+    if (!exist) {
+      for (int m = 0; m < dates.length; m++) {
+        if (dates[m] != null) {
+          int dayPos = Arrays.asList(days).indexOf(dates[m]); //gets the index corresponding to the day of the week
+          for (int n = indexStart; n <= indexEnd; n++) {
           buttons[n][dayPos].setIcon(official);
           buttons[n][dayPos].addMouseListener(new MouseClicker(index));
+          }
         }
       }
     }
@@ -247,6 +260,7 @@ public class CoursePickerPanel2 extends JPanel{
           String name = courseName.getText().toUpperCase();
           searchObj.searchCourse(name);
           setSearchResults();
+          searchResults.setText("Below are all the available sections.");
         } catch (IllegalArgumentException e){
           searchResults.setText("Invalid course name. Please search again.");
         }
@@ -257,9 +271,19 @@ public class CoursePickerPanel2 extends JPanel{
           //searches through the LinkedList of buttons to find a matching actionCommand
           if (Integer.parseInt(courses.get(n).getActionCommand()) == action) {
             //courses.get(n).setEnabled(false);
-            finalClasses.addClass(searchObj.getCourse(n));
-            tp.setSelectedIndex(1);
             addToCalendar(n, searchObj.getCourse(n));
+            if (!exist) {
+            finalClasses.addClass(searchObj.getCourse(n));
+//            System.out.println(searchObj.getCourse(n).getDate()[0]);
+//            System.out.println(searchObj.getCourse(n).getDate()[1]);
+//            System.out.println(searchObj.getCourse(n).getStartTime());
+//            System.out.println(searchObj.getCourse(n).getEndTime());
+            tp.setSelectedIndex(1);
+            }
+            else {
+              searchResults.setText("Time conflict. Please choose another section.");
+              exist = false;
+            }
           }
         }
         
@@ -292,4 +316,5 @@ public class CoursePickerPanel2 extends JPanel{
   }
 }
 
-
+// cannot remove courses added in last round
+// time slots still include ";W"

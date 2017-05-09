@@ -15,34 +15,32 @@ import java.util.*;
 public class CoursePickerPanel2 extends JPanel{
   private JTabbedPane tp;
   private Search searchObj;
-  private FinalClasses fClasses;
+  private FinalClasses finalClasses;
+  
+  //private instance variables to create first tab
+  private JPanel searchTab; //contains all of the elements to search a course
   private JButton searchButton;
   private JTextField courseName;
-  //private JLabel results;
+  private JLabel searchResults; 
   
-  private JLabel searchResults; //text that displays course search results of user
-  private JPanel buttonResults;
-  private JPanel searchTab;
-  private JButton[][] buttons; 
+  private JPanel buttonResults; //shows the grid of buttons representing courses
+  private LinkedList<JButton> courses;  
+  private JButton[][] buttons; //all of the buttons for the calendar
   private JLabel[] timeLabel; 
+  private String[] times; 
   private JLabel[] weekdays; 
   private String[] days; 
-  private String[] times; 
-  private LinkedList<JButton> courses;  
-  private SearchTest tester;
   private ImageIcon official;
-  private FinalClasses finalClasses; 
   private int counter;
+  private boolean exist;
   
   
   public CoursePickerPanel2(Search sObj, FinalClasses f) {
     tp = new JTabbedPane();
-    
     searchObj = sObj;
     finalClasses = f;
-    official = new ImageIcon("Images/red.jpg");
-    counter = 0; //used with setActionCommand to give each course button a unique ID
     
+    //creates the searching part of first tab
     searchTab = new JPanel();
     searchTab.setLayout(new BoxLayout(searchTab, BoxLayout.PAGE_AXIS));
     JPanel searchFunction = new JPanel(new BorderLayout());
@@ -65,15 +63,17 @@ public class CoursePickerPanel2 extends JPanel{
     searchTab.add(searchFunction);
     tp.add("Search", searchTab);
     
-//    setLayout(new FlowLayout());
-//    
-//    leftSide = new JPanel();
-//    leftSide.setLayout(new BoxLayout(leftSide, BoxLayout.PAGE_AXIS));
-    
-    JPanel schedule = new JPanel(new FlowLayout());
-    
+    //sets up the grid of buttons of classes to add 
     buttonResults = new JPanel();
-    buttonResults.setLayout(new WrapLayout());
+    buttonResults.setLayout(new WrapLayout()); //WrapLayout taken from a blog; wraps the buttons 
+    
+    
+    //creating second tab
+    official = new ImageIcon("Images/red.jpg"); //doesn't work for some reason??
+    counter = 0; //used with setActionCommand to give each course button a unique ID
+    
+    JPanel schedule = new JPanel(new FlowLayout()); //represents panel of the second tab
+    
     
     courses = new LinkedList<JButton>(); //stores all of the buttons representing the classes from the Search object
     
@@ -97,7 +97,7 @@ public class CoursePickerPanel2 extends JPanel{
       weekdays[b] = dayLabel;
     }
     
-    JPanel calendar = new JPanel(new GridBagLayout());
+    JPanel calendar = new JPanel(new GridBagLayout()); //stores all of the buttons that make up the calendar
     GridBagConstraints c = new GridBagConstraints();
     
     for (int i = 0; i < buttons.length; i++) {
@@ -125,11 +125,11 @@ public class CoursePickerPanel2 extends JPanel{
     schedule.add(calendar); 
     tp.add("Schedule", schedule);
     add(tp);
+    
   }
-  
   private void setSearchResults() {
-    buttonResults.removeAll();
-    courses.clear();
+    buttonResults.removeAll(); //clears the JPanel of the first tab that contains the grid of courses
+    courses.clear(); //removes all of the previous buttons for the courses
     
     for (int g = 0; g < searchObj.getSize(); g++) {
       String[] dates = searchObj.getCourse(g).getDate(); //gets the String array of dates that the class occurs
@@ -146,17 +146,19 @@ public class CoursePickerPanel2 extends JPanel{
       
       //creates new button to be displayed next to calendar; user would click this to add course to their calendar
       JButton course = new JButton();
-      course.setText("<html> CRN: " + searchObj.getCourse(g).getCRN() + "<br>Course: " + searchObj.getCourse(g).getTitle() + "<br>Meeting times: " + d + 
-                     "<br>Time: " + s + "-" + e + "<br>Professor: " + searchObj.getCourse(g).getProf() + 
-                     "<br>Section: " + searchObj.getCourse(g).getSection());
+      course.setText("<html> CRN: " + searchObj.getCourse(g).getCRN() + "<br>Course: " + 
+                     searchObj.getCourse(g).getTitle() + "<br>Meeting times: " + d + "<br>Time: " + s + "-" + e + 
+                     "<br>Professor: " + searchObj.getCourse(g).getProf() + "<br>Section: " + 
+                     searchObj.getCourse(g).getSection());
       course.setFont(new Font("Calibri", Font.PLAIN, 11));
       course.addActionListener(new ButtonListener(searchObj));
       course.setActionCommand(Integer.toString(counter)); //ActionCommand represents a unique idenfication for the button
       courses.add(course); //adds button to the LinkedList of course buttons
       counter++;
-      course.setPreferredSize(new Dimension(230, 90));
+      course.setPreferredSize(new Dimension(230, 105));
       buttonResults.add(course);
     }
+    
     searchTab.add(buttonResults);
     
   }
@@ -174,17 +176,20 @@ public class CoursePickerPanel2 extends JPanel{
     //gets corresponding index position for the buttons
     int indexStart = Arrays.asList(times).indexOf(start.toString());
     int indexEnd = Arrays.asList(times).indexOf(end.toString());
-    System.out.println(indexStart);
-    System.out.println(indexEnd);
     //shades the places where the class would occur on the calendar
     for (int m = 0; m < dates.length; m++) {
       if (dates[m] != null) {
-        int dayPos = Arrays.asList(days).indexOf(dates[m]);
-        
+        int dayPos = Arrays.asList(days).indexOf(dates[m]); //gets the index corresponding to the day of the week
         for (int n = indexStart; n <= indexEnd; n++) {
-          buttons[n][dayPos].setBorder(BorderFactory.createEmptyBorder());
+          if (buttons[n][dayPos].getIcon() != null) { 
+            exist = true;
+          }
+        }
+        if (!exist) {
+          for (int n = indexStart; n <= indexEnd; n++) {
           buttons[n][dayPos].setIcon(official);
-          buttons[n][dayPos].addMouseListener(new MouseHover(index));
+          buttons[n][dayPos].addMouseListener(new MouseClicker(index));
+          }
         }
       }
     }
@@ -202,25 +207,29 @@ public class CoursePickerPanel2 extends JPanel{
     //gets corresponding index position for the buttons
     int indexStart = Arrays.asList(times).indexOf(start.toString());
     int indexEnd = Arrays.asList(times).indexOf(end.toString());
-    System.out.println(indexStart);
-    System.out.println(indexEnd);
-    //shades the places where the class would occur on the calendar
+    
+    //unshades the places where the class would occur on the calendar
     for (int m = 0; m < dates.length; m++) {
-       int dayPos = Arrays.asList(days).indexOf(dates[m]);
-       for (int n = indexStart; n <= indexEnd; n++) {
-          buttons[n][dayPos].setBorder(BorderFactory.createEmptyBorder());
+      if (dates[m] != null) {
+        int dayPos = Arrays.asList(days).indexOf(dates[m]); //gets the index corresponding to the day of the week
+        for (int n = indexStart; n <= indexEnd; n++) {
           buttons[n][dayPos].setIcon(null);
+          
+          //removes the mouselistener from the buttons corresponding to the class being removed
           MouseListener[] mouseListeners = buttons[n][dayPos].getMouseListeners();
           for (MouseListener mouseListener : mouseListeners) {
             buttons[n][dayPos].removeMouseListener(mouseListener);
           }
-       }
+        }
+      }
     }
   }
- 
+  
+  /* Helper method that searches through finalClasses
+   * and removes the class with the same crn as the text inputed
+   */
   private int getCourseIndex(String text) {
     String crn = text.substring(12,17);
-    System.out.println(crn);
     for (int i = 0; i < finalClasses.getSize(); i++) {
       if (crn.equals(finalClasses.getClass(i).getCRN())) {
         return i;
@@ -246,10 +255,9 @@ public class CoursePickerPanel2 extends JPanel{
           String name = courseName.getText().toUpperCase();
           searchObj.searchCourse(name);
           setSearchResults();
-          //results.setText(searchObj.getSearchResults().toString());  
+          searchResults.setText("Below are all the available sections.");
         } catch (IllegalArgumentException e){
-          System.out.println("blah");
-          //results.setText("Invalid course name. Please search again.");
+          searchResults.setText("Invalid course name. Please search again.");
         }
       }
       else {
@@ -258,35 +266,43 @@ public class CoursePickerPanel2 extends JPanel{
           //searches through the LinkedList of buttons to find a matching actionCommand
           if (Integer.parseInt(courses.get(n).getActionCommand()) == action) {
             //courses.get(n).setEnabled(false);
-            finalClasses.addClass(searchObj.getCourse(n));
-            tp.setSelectedIndex(1);
             addToCalendar(n, searchObj.getCourse(n));
+            if (!exist) {
+            finalClasses.addClass(searchObj.getCourse(n));
+//            System.out.println(searchObj.getCourse(n).getDate()[0]);
+//            System.out.println(searchObj.getCourse(n).getDate()[1]);
+//            System.out.println(searchObj.getCourse(n).getStartTime());
+//            System.out.println(searchObj.getCourse(n).getEndTime());
+            tp.setSelectedIndex(1);
+            }
+            else {
+              searchResults.setText("Time conflict. Please choose another section.");
+              exist = false;
+            }
           }
         }
         
       }
     }
   }
-  private class MouseHover implements MouseListener {
+  private class MouseClicker implements MouseListener {
     private int i;
-    public MouseHover(int index) {
+    public MouseClicker(int index) {
       i = index;
     }
     public void mouseEntered(MouseEvent e) {
-      Object[] options = { "OK", "REMOVE" };
-      int response = JOptionPane.showOptionDialog(null, courses.get(i).getText(), "Course Selection", 
-                                   JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
-      if (response == 1) {
-         int index = getCourseIndex(courses.get(i).getText());
-         //removeFromCalendar(finalClasses.getClass(index));
-         System.out.println("before: " + finalClasses);
-         finalClasses.removeClass(index);
-         System.out.println("after: " + finalClasses);
-      }
     }
     public void mouseExited(MouseEvent e) {
     }
     public void mouseClicked(MouseEvent e) {
+      Object[] options = { "OK", "REMOVE" };
+      int response = JOptionPane.showOptionDialog(null, courses.get(i).getText(), "Course Selection", 
+                                                  JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+      if (response == 1) {
+        int index = getCourseIndex(courses.get(i).getText());
+        removeFromCalendar(finalClasses.getClass(index));
+        finalClasses.removeClass(index);
+      }
     }
     public void mousePressed(MouseEvent e) {
     }
@@ -295,4 +311,5 @@ public class CoursePickerPanel2 extends JPanel{
   }
 }
 
-
+// cannot remove courses added in last round
+// time slots still include ";W"
