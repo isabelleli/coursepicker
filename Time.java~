@@ -19,7 +19,7 @@ public class Time {
     hours = parts[0];
     minutes = parts[1].substring(0,2); //maybe we shouldn't do this here? used to split off AM/PM
     String timePeriod = parts[1].substring(2);
-    if (timePeriod.equals("PM")) {
+    if (timePeriod.equals("PM") && !hours.equals("12")) {
       //adds 12 hours to the original amount of hours to translate to military time
       hours = Integer.toString((Integer.parseInt(hours) + 12)); 
     }
@@ -79,19 +79,19 @@ public class Time {
   }
   
   public static void main(String[] args) {
-    Time t = new Time("08:46PM");
-    Time s = new Time("12:12AM");
-    Time d = new Time("04:16PM");
-    Time f = new Time("04:35AM");
-    System.out.println(t.getHours());
-    System.out.println(t.getMinutes());
-    t.roundToNearestHalfHour();
+    //Time t = new Time("08:46PM");
+    Time s = new Time("11:10AM");
+    Time d = new Time("12:20PM");
+    //Time f = new Time("04:35AM");
+    //System.out.println(t.getHours());
+    //System.out.println(t.getMinutes());
+    //t.roundToNearestHalfHour();
     s.roundToNearestHalfHour();
     d.roundToNearestHalfHour();
-    f.roundToNearestHalfHour();
-    System.out.println(t);
+    //f.roundToNearestHalfHour();
+    //System.out.println(t);
     System.out.println(s);
     System.out.println(d);
-    System.out.println(f);
+   // System.out.println(f);
   }
 }

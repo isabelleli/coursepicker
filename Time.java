@@ -7,8 +7,8 @@
 import java.util.*;
 
 public class Time {
-  private String hours;
-  private String minutes;
+  private int hours;
+  private int minutes;
   
   /* String argument must be formated so that it reflects a 12-hour clock 
    * It's assumed that the argument also includes an indication "PM" and "AM"
@@ -16,33 +16,42 @@ public class Time {
    */
   public Time(String time) { 
     String[] parts = time.split(":");
-    hours = parts[0];
-    minutes = parts[1].substring(0,2); //maybe we shouldn't do this here? used to split off AM/PM
+    hours = Integer.parseInt(parts[0]);
+    minutes = Integer.parseInt(parts[1].substring(0,2)); //used to split off AM/PM
     String timePeriod = parts[1].substring(2);
-    if (timePeriod.equals("PM") && !hours.equals("12")) {
+    if (timePeriod.equals("PM") && hours != 12) {
       //adds 12 hours to the original amount of hours to translate to military time
-      hours = Integer.toString((Integer.parseInt(hours) + 12)); 
+      hours += 12; 
     }
 
   }
   
-  public String getHours() {
+  public int getHours() {
     return hours;
   }
   
-  public String getMinutes() {
+  public int getMinutes() {
     return minutes;
   }
   
-  public void setHours(String h) {
+  public void setHours(int h) {
     hours = h;
   }
   
-  public void setMinutes(String min) {
+  public void setMinutes(int min) {
     minutes = min;
   }
   
-  public void roundToNearestHalfHour() {
+  public int getTime() {
+    String hr = Integer.toString(hours);
+    String min = Integer.toString(minutes);
+    if (min.length() != 2) {
+      min = "0" + minutes;
+    }
+    return Integer.parseInt(hr + min);
+  }
+  
+  /*public void roundToNearestHalfHour() {
     int round = 0;
     int m = Integer.parseInt(minutes);
     if (m != 0 && m != 30) {
@@ -72,7 +81,7 @@ public class Time {
         }
       }
     }
-  }
+  }*/
 
   public String toString() {
     return (hours + ":" + minutes);
@@ -80,14 +89,15 @@ public class Time {
   
   public static void main(String[] args) {
     //Time t = new Time("08:46PM");
-    Time s = new Time("11:10AM");
+    Time s = new Time("04:05PM");
     Time d = new Time("12:20PM");
     //Time f = new Time("04:35AM");
-    //System.out.println(t.getHours());
-    //System.out.println(t.getMinutes());
+    System.out.println(s.getHours());
+    System.out.println(s.getMinutes());
+    System.out.println(s.getTime());
     //t.roundToNearestHalfHour();
-    s.roundToNearestHalfHour();
-    d.roundToNearestHalfHour();
+//    s.roundToNearestHalfHour();
+//    d.roundToNearestHalfHour();
     //f.roundToNearestHalfHour();
     //System.out.println(t);
     System.out.println(s);

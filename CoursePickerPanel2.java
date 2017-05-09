@@ -5,7 +5,6 @@
  * ili, jwang17, slu5
  */
 
-//have to do oNE BIG CLASS 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -27,7 +26,7 @@ public class CoursePickerPanel2 extends JPanel{
   private LinkedList<JButton> courses;  
   private JButton[][] buttons; //all of the buttons for the calendar
   private JLabel[] timeLabel; 
-  private String[] times; 
+  private int[] times; 
   private JLabel[] weekdays; 
   private String[] days; 
   private ImageIcon official;
@@ -81,11 +80,22 @@ public class CoursePickerPanel2 extends JPanel{
     
     //timeLabel array populated by all of the times ranging from 8:30 to 23:30
     timeLabel = new JLabel[31];
-    times = new String[] {"08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
-      "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00",
-      "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"}; //all of the times for the calendar
+    //all of the times for the calendar as integers to make it easier to compare
+    times = new int[] {830, 900, 930, 1000, 1030, 1100, 1130, 1200, 1230, 1300, 1330, 1400, 1430, 1500, 1530, 1600, 
+      1630, 1700, 1730, 1800, 1830, 1900, 1930, 2000, 2030, 2100, 2130, 2200, 2230, 2300, 2330}; 
+
     for (int a = 0; a < timeLabel.length; a++) {
-      JLabel hourLabel = new JLabel(times[a]); //initializes a time label
+      int length = String.valueOf(times[a]).length(); //gets number of digits in an int
+      String timeStr = Integer.toString(times[a]);
+      if (length == 3) { //if length is 3 (aka military time is before 10:00 AM)
+        timeStr = timeStr.substring(0, 1) + ":" + timeStr.substring(1, 3); //add semi-colon in between first character
+        //and the rest of the characters
+      }
+      else {
+        timeStr = timeStr.substring(0, 2) + ":" + timeStr.substring(2, 4); //add semi-colon in between second character
+        //and the rest of the characters
+      }
+      JLabel hourLabel = new JLabel(timeStr); //initializes a time label
       timeLabel[a] = hourLabel;
     }
     
@@ -166,16 +176,35 @@ public class CoursePickerPanel2 extends JPanel{
   
   private void addToCalendar(int index, Course c) {
     String[] dates = c.getDate();
-    Time start = new Time(c.getStartTime());
-    Time end = new Time(c.getEndTime());
     
-    //rounds both start and end time to nearest half hour
-    start.roundToNearestHalfHour(); 
-    end.roundToNearestHalfHour();
+    Time t1 = new Time(c.getStartTime());
+    int start = t1.getTime();
+    System.out.println(start);
     
-    //gets corresponding index position for the buttons
-    int indexStart = Arrays.asList(times).indexOf(start.toString());
-    int indexEnd = Arrays.asList(times).indexOf(end.toString());
+    Time t2 = new Time(c.getEndTime());
+    int end = t2.getTime();
+    System.out.println(end);
+
+    
+    int indexStart = 0;
+    int indexEnd = 0;
+    
+    for (int p = 0; p <  times.length; p++) {
+      if (times[p] >= start) {
+        indexStart = p;
+        System.out.println("intStart" +indexStart);
+        break;
+      }
+    }
+    
+    for (int q = times.length - 1; q > indexStart; q--) {
+      if (times[q] <= end) {
+        System.out.println("intEnd" + q);
+        indexEnd = q;
+        break;
+      }
+    }
+    
     //shades the places where the class would occur on the calendar
     for (int m = 0; m < dates.length; m++) {
       if (dates[m] != null) {
@@ -203,17 +232,35 @@ public class CoursePickerPanel2 extends JPanel{
   
   private void removeFromCalendar(Course c) {
     String[] dates = c.getDate();
-    Time start = new Time(c.getStartTime());
-    Time end = new Time(c.getEndTime());
     
-    //rounds both start and end time to nearest half hour
-    start.roundToNearestHalfHour(); 
-    end.roundToNearestHalfHour();
+    Time t1 = new Time(c.getStartTime());
+    int start = t1.getTime();
+    System.out.println(start);
     
-    //gets corresponding index position for the buttons
-    int indexStart = Arrays.asList(times).indexOf(start.toString());
-    int indexEnd = Arrays.asList(times).indexOf(end.toString());
+    Time t2 = new Time(c.getEndTime());
+    int end = t2.getTime();
+    System.out.println(end);
+
     
+    int indexStart = 0;
+    int indexEnd = 0;
+    
+    for (int p = 0; p <  times.length; p++) {
+      if (times[p] >= start) {
+        indexStart = p;
+        System.out.println("intStart" +indexStart);
+        break;
+      }
+    }
+    
+    for (int q = times.length - 1; q > indexStart; q--) {
+      if (times[q] <= end) {
+        System.out.println("intEnd" + q);
+        indexEnd = q;
+        break;
+      }
+    }
+
     //unshades the places where the class would occur on the calendar
     for (int m = 0; m < dates.length; m++) {
       if (dates[m] != null) {
@@ -242,6 +289,7 @@ public class CoursePickerPanel2 extends JPanel{
     }
     return -1;
   }
+  
   
   private class ButtonListener implements ActionListener{
     //CourseInformationTest object, containing hash tables, is an input
