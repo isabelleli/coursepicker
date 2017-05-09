@@ -31,7 +31,7 @@ public class Course{
     String [] times = time.split("-");
     date = times[0];
     startTime = times[1];
-    endTime = times[2];
+    endTime = times[2].substring(0,times[2].indexOf("M")+1);
     
     
   }
