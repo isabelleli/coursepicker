@@ -101,7 +101,7 @@ public class Course{
   public String toString() {
     String r = "";
     r += "Title: " + title + "\nSession: " + section + "\nCRN: " + crn + "\nProfessor: " + professor + "\nTime: "
-      + time;
+      + time.split(";")[0];
     
     return r;
     
