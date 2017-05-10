@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
+
+# courses.py
+# Jennifer Wang, Isabelle Li, Shan Lu
+# CS 230 Final Project
+# Scraping courses information from course browser using library Selenium
+# Modified by: slu5
+# Modified date: 04/22/17
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import os,time
 from pprint import pprint
 import json
 
-#CityName_RestaurantName
 
 driver = webdriver.Chrome(executable_path='/Users/Regina/Desktop/webdriver/chromedriver.exe')
 driver.get("https://courses.wellesley.edu")

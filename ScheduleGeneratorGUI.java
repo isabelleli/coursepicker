@@ -2,6 +2,7 @@
  * Jennifer Wang, Isabelle Li, Shan Lu
  * CS 230 Final Project
  * This is the GUI that will build the framework to show both panels
+ * Modified by: jwang17
  */
 
 import javax.swing.JFrame;

@@ -101,7 +101,7 @@ public class Course{
   public String toString() {
     String r = "";
     r += "Title: " + title + "\nSession: " + section + "\nCRN: " + crn + "\nProfessor: " + professor + "\nTime: "
-      + time;
+      + time.split(";")[0];
     
     return r;
     
@@ -111,8 +111,8 @@ public class Course{
   public static void main(String[] args) {
     String[] d = {"CS 111", "Intro to CS", "01", "Eni", "TH - 10:30 AM - 12:20 PM"};
     Course c = new Course("56789", d);
-//    System.out.println(c.getStartTime());
-//    System.out.println(c.getEndTime());
+    System.out.println(c.getStartTime());
+    System.out.println(c.getEndTime());
     System.out.println(Arrays.toString(c.getDate()));
     System.out.println(c);
     

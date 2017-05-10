@@ -2,6 +2,7 @@
  * Jennifer Wang, Isabelle Li, Shan Lu
  * CS 230 Final Project
  * This is the object that we will use to store the linked list of final course selections the user has made.
+ * Modified by: jwang17
  */
 
 import java.util.*;

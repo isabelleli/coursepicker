@@ -27,7 +27,7 @@ public class CourseInformation {
   
   /*
    Constructor
-   reads courses info from imput file and puts them into 
+   reads courses info from input file and puts them into 
    hashtables courseCRN and courseDetails
   */
   public CourseInformation(String fileName) {
@@ -141,6 +141,16 @@ public class CourseInformation {
   */
   public Hashtable<String, String[]> getSecondTable() {
     return courseDetails;
+  }
+  
+  /*searching
+   */
+   public String[] searchDetails(String crn) { 
+    return courseDetails.get(crn);
+  }
+  
+  public LinkedList<String> searchCRNs(String title) { 
+    return courseCRN.get(title);
   }
   
   /*

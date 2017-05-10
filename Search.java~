@@ -42,6 +42,13 @@ public class Search{
     return s + "</body></html>"; 
   }
   
+  public Course getCourse(int i) {
+    return searchResults.get(i);
+  }
+  
+  public int getSize() {
+    return searchResults.size();
+  }
   
   public static void main(String[] args) {
     CourseInformation test = new CourseInformation("CourseInfo.txt");

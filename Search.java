@@ -1,8 +1,9 @@
 /* Search.java
-<<<<<<< HEAD
  * Jennifer Wang, Isabelle Li, Shan Lu
  * CS 230 Final Project
  * Object to store results from a single search
+ * Modified by: jwang17
+ * Modified date: 05/07/17
  */
 
 import java.util.*;

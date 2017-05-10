@@ -1,4 +1,7 @@
-/* Taken from Rob Camick
+/* Search.java
+ * Jennifer Wang, Isabelle Li, Shan Lu
+ * CS 230 Final Project
+ * Taken from Rob Camick
  * https://tips4java.wordpress.com/2008/11/06/wrap-layout/
  */
 import java.awt.*;

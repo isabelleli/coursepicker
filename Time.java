@@ -1,5 +1,6 @@
 /* Time.java
- * CS 230 final project
+ * Jennifer Wang, Isabelle Li, Shan Lu
+ * CS 230 Final Project
  * Modified by: ili
  * Modified date: 04/25/17
  */

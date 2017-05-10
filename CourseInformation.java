@@ -1,9 +1,10 @@
-/*
- CourseInformation.java
- 2 Hash Tables storing all course information
- Written by: Shan Lu
- Apr. 26, 2017
-*/
+/* CourseInformation.java
+ * Jennifer Wang, Isabelle Li, Shan Lu
+ * CS 230 Final Project
+ * 2 Hash Tables storing all course information
+ * Modified by: slu5
+ * Modified date: 04/26/17
+ */
 
 
 import java.util.*;

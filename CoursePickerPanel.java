@@ -1,8 +1,12 @@
 /* CoursePickerPanel.java
- * CS 230 final project
+ * Jennifer Wang, Isabelle Li, Shan Lu
+ * CS 230 Final Project
  * Modified by: ili
  * Modified date: 05/06/17
- * ili, jwang17, slu5
+ * Modified by: jwang17
+ * Modified date: 05/07/17
+ * Modified by: slu5
+ * Modified date: 05/08/17
  */
 
 import java.awt.*;
@@ -79,7 +83,7 @@ public class CoursePickerPanel extends JPanel{
     
     buttons = new JButton[31][5]; //represents the calendar 
     
-    colors = new Color[] {Color.blue, Color.red, Color.yellow, Color.cyan, Color.gray, Color.green, Color.magenta, 
+    colors = new Color[] {Color.cyan, Color.red, Color.yellow, Color.blue, Color.gray, Color.green, Color.magenta, 
       Color.orange, Color.pink};
     
     //timeLabel array populated by all of the times ranging from 8:30 to 23:30
@@ -280,7 +284,6 @@ public class CoursePickerPanel extends JPanel{
         }
       }
     }
-    chooseColor--;
   }
   
   /* Helper method that searches through finalClasses
