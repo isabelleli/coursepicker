@@ -118,7 +118,7 @@ public class CoursePickerPanel extends JPanel{
       for (int j = 0; j < buttons[i].length; j++) {
         c.gridx = j + 1; //sets the column position of the button to k
         buttons[i][j] = new JButton("");
-        buttons[i][j].setPreferredSize(new Dimension(90, 20)); //sets the size of the buttons
+        buttons[i][j].setPreferredSize(new Dimension(150, 20)); //sets the size of the buttons
         c.insets = new Insets(-2, -2, -2, -2); //insets with negative values removes spaces in between the buttons
         calendar.add(buttons[i][j], c);
         buttons[i][j].setEnabled(false); //prevents user from clicking any buttons on the calendar
@@ -217,7 +217,7 @@ public class CoursePickerPanel extends JPanel{
         if (dates[m] != null) {
           int dayPos = Arrays.asList(days).indexOf(dates[m]); //gets the index corresponding to the day of the week
           for (int n = indexStart; n <= indexEnd; n++) {
-          buttons[n][dayPos].setText(c.getCRN());
+          buttons[n][dayPos].setText(c.getCRN()+ " - " + c.getTitle());
           //buttons[n][dayPos].setIcon(official);
           buttons[n][dayPos].addMouseListener(new MouseClicker(index));
           }
@@ -337,7 +337,7 @@ public class CoursePickerPanel extends JPanel{
     }
     public void mouseClicked(MouseEvent e) {
       Object[] options = { "OK", "REMOVE" };
-      String crn = ((JButton)e.getSource()).getText(); //crn of the course corresponding to said JButton
+      String crn = ((JButton)e.getSource()).getText().substring(0,5); //crn of the course corresponding to said JButton
       int index = getCourseIndex(crn); //index of the course in finalClasses
       int response = JOptionPane.showOptionDialog(null, finalClasses.getClass(index).toString(), "Course Selection", 
                                                   JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
