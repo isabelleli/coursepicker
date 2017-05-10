@@ -29,8 +29,9 @@ public class CoursePickerPanel extends JPanel{
   private int[] times; 
   private JLabel[] weekdays; 
   private String[] days; 
-  private ImageIcon official;
+  private Color[] colors;
   private int counter;
+  private int chooseColor;
   private boolean exist;
   
   
@@ -68,8 +69,8 @@ public class CoursePickerPanel extends JPanel{
     
     
     //creating second tab
-    official = new ImageIcon("Images/red.jpg"); //doesn't work for some reason??
     counter = 0; //used with setActionCommand to give each course button a unique ID
+    chooseColor = 0;
     
     JPanel schedule = new JPanel(new FlowLayout()); //represents panel of the second tab
     
@@ -77,6 +78,9 @@ public class CoursePickerPanel extends JPanel{
     courses = new LinkedList<JButton>(); //stores all of the buttons representing the classes from the Search object
     
     buttons = new JButton[31][5]; //represents the calendar 
+    
+    colors = new Color[] {Color.blue, Color.cyan, Color.gray, Color.green, Color.yellow, Color.magenta, 
+      Color.orange, Color.pink, Color.red};
     
     //timeLabel array populated by all of the times ranging from 8:30 to 23:30
     timeLabel = new JLabel[31];
@@ -218,12 +222,16 @@ public class CoursePickerPanel extends JPanel{
           int dayPos = Arrays.asList(days).indexOf(dates[m]); //gets the index corresponding to the day of the week
           for (int n = indexStart; n <= indexEnd; n++) {
           buttons[n][dayPos].setText(c.getCRN()+ " - " + c.getTitle());
+          buttons[n][dayPos].setForeground(Color.BLACK);
+          buttons[n][dayPos].setBackground(colors[chooseColor % 9]);
+          buttons[n][dayPos].setOpaque(true);
           //buttons[n][dayPos].setIcon(official);
           buttons[n][dayPos].addMouseListener(new MouseClicker(index));
           }
         }
       }
     }
+    chooseColor++;
   }
   
   private void removeFromCalendar(Course c) {
@@ -260,6 +268,7 @@ public class CoursePickerPanel extends JPanel{
         for (int n = indexStart; n <= indexEnd; n++) {
           //buttons[n][dayPos].setIcon(null);
           buttons[n][dayPos].setText("");
+          buttons[n][dayPos].setBackground(null);
           //removes the mouselistener from the buttons corresponding to the class being removed
           MouseListener[] mouseListeners = buttons[n][dayPos].getMouseListeners();
           for (MouseListener mouseListener : mouseListeners) {

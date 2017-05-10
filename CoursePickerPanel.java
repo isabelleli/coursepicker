@@ -79,8 +79,8 @@ public class CoursePickerPanel extends JPanel{
     
     buttons = new JButton[31][5]; //represents the calendar 
     
-    colors = new Color[] {Color.blue, Color.cyan, Color.gray, Color.green, Color.yellow, Color.magenta, 
-      Color.orange, Color.pink, Color.red};
+    colors = new Color[] {Color.blue, Color.red, Color.yellow, Color.cyan, Color.gray, Color.green, Color.magenta, 
+      Color.orange, Color.pink};
     
     //timeLabel array populated by all of the times ranging from 8:30 to 23:30
     timeLabel = new JLabel[31];
@@ -221,11 +221,15 @@ public class CoursePickerPanel extends JPanel{
         if (dates[m] != null) {
           int dayPos = Arrays.asList(days).indexOf(dates[m]); //gets the index corresponding to the day of the week
           for (int n = indexStart; n <= indexEnd; n++) {
-          buttons[n][dayPos].setText(c.getCRN()+ " - " + c.getTitle());
-          buttons[n][dayPos].setBackground(colors[chooseColor % 9]);
-          buttons[n][dayPos].setOpaque(true);
-          //buttons[n][dayPos].setIcon(official);
-          buttons[n][dayPos].addMouseListener(new MouseClicker(index));
+            JButton button = buttons[n][dayPos];
+            button.setOpaque(true);
+//            buttons[n][dayPos].setText("<html><font color=" + (buttons[n][dayPos].isEnabled() ? "blue" : "red") + ">"
+//                + c.getCRN()+ " - " + c.getTitle() + "</font></html>");
+            button.setText(c.getCRN()+ " - " + c.getTitle());
+            //button.setForeground(Color.black);
+            button.setBackground(colors[chooseColor % 9]);
+            //buttons[n][dayPos].setIcon(official);
+            button.addMouseListener(new MouseClicker(index));
           }
         }
       }
@@ -276,6 +280,7 @@ public class CoursePickerPanel extends JPanel{
         }
       }
     }
+    chooseColor--;
   }
   
   /* Helper method that searches through finalClasses
