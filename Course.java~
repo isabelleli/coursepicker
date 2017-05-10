@@ -2,6 +2,7 @@
  * Jennifer Wang, Isabelle Li, Shan Lu
  * CS 230 Final Project
  * Object to store information about an individual course
+ * Modified by: jwang17
  */
 
 import java.util.*;

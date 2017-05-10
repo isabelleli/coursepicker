@@ -1,6 +1,7 @@
 /* Time.java
  * Jennifer Wang, Isabelle Li, Shan Lu
  * CS 230 Final Project
+ * Deals with converting the times of each class (given as strings) to a useable format
  * Modified by: ili
  * Modified date: 04/25/17
  */
@@ -52,6 +53,7 @@ public class Time {
     return Integer.parseInt(hr + min);
   }
   
+  //initally written to round time, no longer needed in new scheduling design
   /*public void roundToNearestHalfHour() {
     int round = 0;
     int m = Integer.parseInt(minutes);

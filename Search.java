@@ -15,12 +15,16 @@ public class Search{
   private LinkedList<String> crns;
   
   public Search(CourseInformation info){
+    //creates new empty linked lists of Course objects and crns, takes in CourseInformation object w/ 2 hash tables 
     searchResults = new LinkedList<Course>(); 
     courseInfo = info;
     crns = new LinkedList<String>();
   }
   
   public void searchCourse(String title) throws IllegalArgumentException{
+    /* when given a course title, searches the first hash table to get the linked list of all crns with course title,
+     * then loops through the array of crns to get the details of each section with said course title. If inputted
+     * title is not in the hash table, throws an IllegalArgumentException*/
     if (courseInfo.getFirstTable().containsKey(title)){
       searchResults.clear(); 
       crns = courseInfo.searchCRNs(title);
@@ -36,6 +40,7 @@ public class Search{
   }
 
   public String getSearchResults(){
+    //formatted using html to display in GUI
     String s = "<html><body>";
     for (int i = 0; i < searchResults.size(); i++) {
       s += searchResults.get(i).toString() + "<br>";
@@ -44,14 +49,17 @@ public class Search{
   }
   
   public Course getCourse(int i) {
+    //gets the course at index i in searchResults
     return searchResults.get(i);
   }
   
   public int getSize() {
+    //returns size of searchResults
     return searchResults.size();
   }
   
   public static void main(String[] args) {
+    //initial testing
     CourseInformation test = new CourseInformation("CourseInfo.txt");
     
     Search bob = new Search(test);

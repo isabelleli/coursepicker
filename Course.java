@@ -21,14 +21,13 @@ public class Course{
   public Course(String c, String[] info) { //second parameter is CourseInformation info;
     crn = c;
     String[] infoArray = info;
-    //String[] infoArray = info.searchDetails(c); //questionable? may need to copy entire array instead of just reading off
     title = infoArray[0];
     name = infoArray[1]; 
     section = infoArray[2];
     professor = infoArray[3];
     time = infoArray[4];
     
-    time = time.replaceAll("\\s","");
+    time = time.replaceAll("\\s","");  //replace all white spaces, split by dash to get dates, start and end time
     String [] times = time.split("-");
     date = times[0];
     startTime = times[1];
@@ -110,6 +109,7 @@ public class Course{
   }
   
   public static void main(String[] args) {
+    //initial testing
     String[] d = {"CS 111", "Intro to CS", "01", "Eni", "TH - 10:30 AM - 12:20 PM"};
     Course c = new Course("56789", d);
     System.out.println(c.getStartTime());

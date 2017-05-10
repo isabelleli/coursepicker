@@ -3,6 +3,7 @@
  * CS 230 Final Project
  * This is the GUI that will build the framework to show both panels
  * Modified by: jwang17
+ * Modified date: 05/07/17
  */
 
 import javax.swing.JFrame;
@@ -19,12 +20,9 @@ public class ScheduleGeneratorGUI {
     CourseInformation info = new CourseInformation("CourseInfo.txt");
     Search userSearch = new Search(info);
     FinalClasses classList = new FinalClasses();
-
-    CoursePickerPanel p = new CoursePickerPanel(userSearch, classList);
+    
     // Creates tab pane and adds different tabs to it.
-//    JTabbedPane tp = new JTabbedPane();
-//    tp.addTab("Search", new SearchTabPanel(userSearch));
-//    tp.addTab("Schedule Generator", new ScheduleTabPanel2(userSearch, classList)); 
+    CoursePickerPanel p = new CoursePickerPanel(userSearch, classList);
     
     // Makes sure the user can actually see things
     frame.getContentPane().add(p);

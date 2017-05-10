@@ -1,6 +1,7 @@
 /* CoursePickerPanel.java
  * Jennifer Wang, Isabelle Li, Shan Lu
  * CS 230 Final Project
+ * Creates the search and schedule tabs and methods associated with them.
  * Modified by: ili
  * Modified date: 05/06/17
  * Modified by: jwang17
@@ -183,6 +184,7 @@ public class CoursePickerPanel extends JPanel{
   
   
   private void addToCalendar(int index, Course c) {
+    //determines the position of an added course on the calendar and changes the display of corresponding buttons
     String[] dates = c.getDate();
     
     Time t1 = new Time(c.getStartTime());
@@ -195,6 +197,7 @@ public class CoursePickerPanel extends JPanel{
     int indexStart = 0;
     int indexEnd = 0;
     
+    //if the time of each button is within start time and end time of the course, find start/end indices
     for (int p = 0; p <  times.length; p++) {
       if (times[p] >= start) {
         indexStart = p;
@@ -209,7 +212,7 @@ public class CoursePickerPanel extends JPanel{
       }
     }
     
-    //shades the places where the class would occur on the calendar
+    //notes the places where the class would occur on the calendar & changes display of buttons
     for (int m = 0; m < dates.length; m++) {
       if (dates[m] != null) {
         int dayPos = Arrays.asList(days).indexOf(dates[m]); //gets the index corresponding to the day of the week
@@ -225,14 +228,11 @@ public class CoursePickerPanel extends JPanel{
         if (dates[m] != null) {
           int dayPos = Arrays.asList(days).indexOf(dates[m]); //gets the index corresponding to the day of the week
           for (int n = indexStart; n <= indexEnd; n++) {
+            //labels each button with CRN and title of course, sets a background color, and adds a mouseClicker
             JButton button = buttons[n][dayPos];
             button.setOpaque(true);
-//            buttons[n][dayPos].setText("<html><font color=" + (buttons[n][dayPos].isEnabled() ? "blue" : "red") + ">"
-//                + c.getCRN()+ " - " + c.getTitle() + "</font></html>");
-            button.setText(c.getCRN()+ " - " + c.getTitle());
-            //button.setForeground(Color.black);
+            button.setText(c.getCRN()+ " - " + c.getTitle()); 
             button.setBackground(colors[chooseColor % 9]);
-            //buttons[n][dayPos].setIcon(official);
             button.addMouseListener(new MouseClicker(index));
           }
         }
@@ -242,6 +242,7 @@ public class CoursePickerPanel extends JPanel{
   }
   
   private void removeFromCalendar(Course c) {
+    //the reverse process of addToCalendar. changes button display to empty string, removes MouseListener
     String[] dates = c.getDate();
     
     Time t1 = new Time(c.getStartTime());
@@ -273,7 +274,6 @@ public class CoursePickerPanel extends JPanel{
       if (dates[m] != null) {
         int dayPos = Arrays.asList(days).indexOf(dates[m]); //gets the index corresponding to the day of the week
         for (int n = indexStart; n <= indexEnd; n++) {
-          //buttons[n][dayPos].setIcon(null);
           buttons[n][dayPos].setText("");
           buttons[n][dayPos].setBackground(null);
           //removes the mouselistener from the buttons corresponding to the class being removed
@@ -287,7 +287,7 @@ public class CoursePickerPanel extends JPanel{
   }
   
   /* Helper method that searches through finalClasses
-   * and removes the class with the same crn as the text inputed
+   * and removes the class with the same crn as the text inputted
    */
   private int getCourseIndex(String crn) {
     for (int i = 0; i < finalClasses.getSize(); i++) {
@@ -300,7 +300,7 @@ public class CoursePickerPanel extends JPanel{
   
   
   private class ButtonListener implements ActionListener{
-    //CourseInformationTest object, containing hash tables, is an input
+    //Search object, containing searchResults linked list, is an input
     private Search searchObj;
     
     public ButtonListener(Search s){
@@ -326,8 +326,9 @@ public class CoursePickerPanel extends JPanel{
         for (int n = 0; n < courses.size(); n++) { 
           //searches through the LinkedList of buttons to find a matching actionCommand
           if (Integer.parseInt(courses.get(n).getActionCommand()) == action) {
-            //courses.get(n).setEnabled(false);
             addToCalendar(n, searchObj.getCourse(n));
+            
+            //to deal with time conflicts
             if (!exist) {
             finalClasses.addClass(searchObj.getCourse(n));
             tp.setSelectedIndex(1);
@@ -357,7 +358,8 @@ public class CoursePickerPanel extends JPanel{
       int index = getCourseIndex(crn); //index of the course in finalClasses
       int response = JOptionPane.showOptionDialog(null, finalClasses.getClass(index).toString(), "Course Selection", 
                                                   JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
-      if (response == 1) {
+      if (response == 1) { 
+        //once user clicks the Remove button for this course, remove course from calendar display and finalClasses
         removeFromCalendar(finalClasses.getClass(index));
         finalClasses.removeClass(index);
       }
@@ -369,4 +371,3 @@ public class CoursePickerPanel extends JPanel{
   }
 }
 
-// cannot remove courses added in last round
