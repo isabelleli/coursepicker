@@ -1,4 +1,4 @@
-/* Search.java
+/* WrapLayout.java
  * Jennifer Wang, Isabelle Li, Shan Lu
  * CS 230 Final Project
  * Taken from Rob Camick
